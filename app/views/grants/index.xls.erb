@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40"> 
+	<Worksheet ss:Name="All Data Pulled on-<%= Date.today %>">
+		<Table>
+			<Row>
+				<Cell><Data ss:Type="String">Fiscal Year</Data></Cell>
+				<Cell><Data ss:Type="String">Grant Type</Data></Cell>
+				<Cell><Data ss:Type="String">Organization</Data></Cell>
+				<Cell><Data ss:Type="String">Location</Data></Cell>
+				<Cell><Data ss:Type="String">Amount</Data></Cell>
+			</Row>
+		<% @grants.each do |g| %>
+			<Row>
+				<Cell><Data ss:Type="String"><%= g.fiscal_year %></Data></Cell>
+				<Cell><Data ss:Type="String"><%= g.grant_type %></Data></Cell>
+				<Cell><Data ss:Type="String"><%= g.organization %></Data></Cell>
+				<Cell><Data ss:Type="String"><%= g.location %></Data></Cell>
+				<Cell><Data ss:Type="String"><%= g.amount %></Data></Cell>
+			</Row>						
+		<% end %>
+		</Table>
+	</Worksheet>
+</Workbook>

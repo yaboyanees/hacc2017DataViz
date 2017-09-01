@@ -1,0 +1,44 @@
+<%= form_with(model: grant, local: true) do |form| %>
+	<% if grant.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(grant.errors.count, "error") %> prohibited this grant from being saved:</h2>
+			<ul>
+			<% grant.errors.full_messages.each do |message| %>
+				<li><%= message %></li>
+    		<% end %>
+      		</ul>
+    	</div>
+  	<% end %>
+
+	<%= form.select :fiscal_year, Grant::FY, :prompt => "Select FY" %><br />
+    <%= form.select :grant_type, Grant::GRANT_TYPES, :prompt => "Select Grant Type" %><br />
+  
+    <%= form.label :organization %>
+    <%= form.text_area:organization, id: :grant_organization %><br />
+  
+    <%= form.label :project %>
+    <%= form.text_area :project, id: :grant_project %><br />
+  
+    <%= form.label :amount %>
+    <%= form.number_field :amount, id: :grant_amount %><br />
+ 
+    <%= form.select :location, Grant::LOCATION_SELECT, :prompt => "Select Grant Type" %><br />
+    <%= form.select :strategic_priority, Grant::STRATEGIC_PRIORITY, :prompt => "Select Strategic Priority" %><br />
+    <%= form.select :strategic_results, Grant::STRATEGIC_RESULTS, :prompt => "Select Strategic Results" %><br />
+  
+    <%= form.label :total_served %>
+    <%= form.number_field :total_served, id: :grant_total_served %><br />
+
+    <%= form.label :nh_served %>
+    <%= form.number_field :nh_served, id: :grant_nh_served %><br />
+  
+    <%= form.label :grantStatusID %>
+    <%= form.number_field :grantStatusID, id: :grant_grantStatusID %><br />
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+

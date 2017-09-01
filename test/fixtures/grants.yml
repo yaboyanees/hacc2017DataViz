@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fiscal_year: 1
+  grant_type: MyString
+  organization: MyString
+  project: MyText
+  amount: 1
+  location: MyString
+  strategic_priority: MyString
+  strategic_results: MyString
+  total_served: 1
+  nh_served: 1
+  grantStatusID: 1
+
+two:
+  fiscal_year: 1
+  grant_type: MyString
+  organization: MyString
+  project: MyText
+  amount: 1
+  location: MyString
+  strategic_priority: MyString
+  strategic_results: MyString
+  total_served: 1
+  nh_served: 1
+  grantStatusID: 1
