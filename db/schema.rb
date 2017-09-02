@@ -16,11 +16,11 @@ ActiveRecord::Schema.define(version: 20170901074056) do
   enable_extension "plpgsql"
 
   create_table "grants", force: :cascade do |t|
-    t.integer "fiscal_year"
+    t.string "fiscal_year"
     t.string "grant_type"
-    t.text "organization"
+    t.string "organization"
     t.text "project"
-    t.integer "amount"
+    t.decimal "amount", precision: 10, scale: 2
     t.string "location"
     t.string "strategic_priority"
     t.string "strategic_results"
