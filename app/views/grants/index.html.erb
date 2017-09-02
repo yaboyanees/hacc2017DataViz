@@ -35,9 +35,9 @@
 <% else %>	
 <% end %>
 
-<h2>All Data</h2>
+<br/><h2>All Data</h2>
 <!-- spit out data block -->
-<% @grants.each do |grant| %><br/>
+<% @grants.each do |grant| %>
 	Fiscal Year: <%= grant.fiscal_year %><br/>
 	Grant type: <%= grant.grant_type %><br/>
 	Organization: <%= grant.organization %><br/>      
@@ -52,7 +52,7 @@
 	
 	<%= link_to 'Show', grant %>
 	<%= link_to 'Edit', edit_grant_path(grant) %>
-	<%= link_to 'Destroy', grant, method: :delete, data: { confirm: 'Are you sure?' } %><br/>
+	<%= link_to 'Destroy', grant, method: :delete, data: { confirm: 'Are you sure?' } %><br/><br/>
 <% end %>
 
 <script>
