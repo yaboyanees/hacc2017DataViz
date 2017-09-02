@@ -1,0 +1,59 @@
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<div id="barChartOptions"></div>
+<button id="pie-chart">Pie Chart</button>
+<button id="bar-chart">Bar Chart</button><br/>
+
+<script>
+var chart = Highcharts.chart('barChartOptions', {
+
+    title: {
+        text: 'Toggle Chart'
+    },
+
+    subtitle: {
+        text: 'Bar Chart'
+    },
+
+    xAxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    },
+
+    series: [{
+        type: 'column',
+        colorByPoint: true,
+        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+        showInLegend: false
+    }]
+
+});
+
+
+$('#pie-chart').click(function () {
+    chart.update({
+        subtitle: {
+            text: 'Pie Chart'
+        },
+		series: [{
+			type: 'pie',
+			colorByPoint: true,
+			data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+			showInLegend: false
+		}]
+    });
+});
+
+$('#bar-chart').click(function () {
+    chart.update({
+        subtitle: {
+            text: 'Bar Chart'
+        },
+		series: [{
+			type: 'column',
+			colorByPoint: true,
+			data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+			showInLegend: false
+		}]
+    });
+});
+
+</script>

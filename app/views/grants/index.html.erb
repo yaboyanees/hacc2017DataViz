@@ -1,12 +1,10 @@
-<h1>Grants</h1>
-
 <% if flash[:notice] %>
-	<p id="flashNotice" class="messages-notice"><%= notice %></p>
+	<p id="flashNotice"><%= notice %></p>
 <% end %>
 
 <%= link_to 'New Grant', new_grant_path %><br/>
-<% if @grants.empty? %>
-<% else %>
+
+<% if @grants.present? %>
 	<%= link_to 'Export All Data', grants_url(format: "xls") %> | <%= link_to "View PDF Report", grants_path(@grants, :format => :pdf) %> | <%= link_to 'Delete All Data', kill_grants_url, :method => :delete %><br/>
 
 	<h3>DB Sample Queries</h3>
@@ -17,9 +15,27 @@
 	Strategic Results Count <b><%= @strategic_results_count %></b><br/>
 	Location Count <b><%= @location_count %></b><br/>
 	<br/>
+
+	<h3>Random Static Chart Examples</h3>	
+	<!-- load drill-down chart -->
+	<%= render 'drillDownChart' %>
 	
+	<!-- load stacked chart -->
+	<%= render 'stackedChart' %>
+	
+	<!-- load grouped bar chart -->
+	<%= render 'groupedBarChart' %>
+
+	<!-- load stacked grouped bar chart -->
+	<%= render 'stackedGroupedBarChart' %>
+	
+	<!-- load bar chart with options -->
+	<%= render 'barChartOptions' %>
+	
+<% else %>	
 <% end %>
 
+<h2>All Data</h2>
 <!-- spit out data block -->
 <% @grants.each do |grant| %><br/>
 	Fiscal Year: <%= grant.fiscal_year %><br/>
@@ -40,7 +56,7 @@
 <% end %>
 
 <script>
-	$("#flashNotice").fadeOut(2500);
+	$("#flashNotice").fadeOut(3000);
 </script>
 
 <!-- uncomment this to run console on the page-->
