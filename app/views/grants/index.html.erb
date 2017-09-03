@@ -7,7 +7,7 @@
 <% if @grants.present? %>
 	<%= link_to 'Export All Data', grants_url(format: "xls") %> | <%= link_to "View PDF Report", grants_path(@grants, :format => :pdf) %> | <%= link_to 'Delete All Data', kill_grants_url, :method => :delete %><br/>
 
-	<h3>DB Sample Queries</h3>
+	<h2>DB Sample Queries</h2>
 	There are currently <b><%= @grant_count %></b> records in the Database!<br/>
 	Year Count <b><%= @year_count %></b><br/>
 	Grant Type Count <b><%= @grant_type_count %></b><br/>
@@ -16,7 +16,11 @@
 	Location Count <b><%= @location_count %></b><br/>
 	<br/>
 
-	<h3>Random Static Chart Examples</h3>	
+	<h2>DataTable Example</h2>
+	<!-- load data table -->
+	<%= render 'dataTable' %>	
+
+	<h2>Random Static Chart Examples</h2>	
 	<!-- load drill-down chart -->
 	<%= render 'drillDownChart' %>
 	
@@ -34,6 +38,7 @@
 	
 <% else %>	
 <% end %>
+
 
 <br/><h2>All Data</h2>
 <!-- spit out data block -->
