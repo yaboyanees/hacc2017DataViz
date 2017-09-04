@@ -16,7 +16,6 @@ ActiveRecord::Schema.define(version: 20170901074056) do
   enable_extension "plpgsql"
 
   create_table "grants", force: :cascade do |t|
-<<<<<<< HEAD
     t.string "fiscal_year"
     t.string "grant_type"
     t.string "organization"
@@ -25,33 +24,11 @@ ActiveRecord::Schema.define(version: 20170901074056) do
     t.string "location"
     t.string "strategic_priority"
     t.string "strategic_results"
-=======
-    t.integer "fiscal_year"
-    t.text "grant_type"
-    t.text "organization"
-    t.text "project"
-    t.decimal "amount", precision: 10, scale: 2
-    t.text "location"
-    t.text "strategic_priority"
-    t.text "strategic_results"
->>>>>>> e98558437a7901ee9e387e4f89d25afb89cc82ea
     t.integer "total_served"
     t.integer "nh_served"
     t.integer "grantStatusID"
-  end
-
-  create_table "oha_data", id: false, force: :cascade do |t|
-    t.integer "Fiscal_year"
-    t.text "Grant_type"
-    t.text "Organization"
-    t.text "Project"
-    t.float "Amount"
-    t.text "Location"
-    t.text "Strategic_priority"
-    t.text "Strategic_results"
-    t.integer "Total_served"
-    t.integer "NH_Served"
-    t.integer "Status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

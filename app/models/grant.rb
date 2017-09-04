@@ -10,7 +10,7 @@ class Grant < ApplicationRecord
 	validates :fiscal_year, :grant_type, :organization, :project, :amount, :location, :strategic_priority, :strategic_results, :grantStatusID, :presence => true
 
 	#import csv file data
-	require 'csv'
+	#require 'csv'
 	def self.import(file)
 	  CSV.foreach(file.path, headers: true, encoding: 'iso-8859-1:utf-8') do |row|
 		Grant.create! row.to_hash

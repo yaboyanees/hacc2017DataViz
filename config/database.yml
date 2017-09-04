@@ -17,24 +17,24 @@
 
 development:
    adapter: postgresql
-   database: Oha_data
+   database: tester
    host: localhost
    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-   username: tester
-   password: tester
+   username: aneesmerzi
+   password: <%= ENV['TESTER_DATABASE_PASSWORD'] %> 
 
 test:
    adapter: postgresql
-   database: Oha_data
+   database: tester
    host: localhost
    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-   username: tester
-   password: tester
+   username: aneesmerzi
+   password: <%= ENV['TESTER_DATABASE_PASSWORD'] %> 
    
 production:
    adapter: postgresql
-   database: Oha_data
+   database: tester
    host: localhost
    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-   username: tester
-   password: tester
+   username: aneesmerzi
+   password: <%= ENV['TESTER_DATABASE_PASSWORD'] %> 
