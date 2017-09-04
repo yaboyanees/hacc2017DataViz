@@ -1,7 +1,7 @@
 class CreateGrants < ActiveRecord::Migration[5.1]
   def change
     create_table :grants do |t|
-      t.string 	:fiscal_yea
+      t.string 	:fiscal_year
       t.text 	:grant_type
       t.text  	:organization
       t.text 	:project

@@ -1,5 +1,5 @@
 class GrantsController < ApplicationController
-  before_action :set_grant, only: [:show, :edit, :update, :destroy]
+  before_action :set_grant, only: [:show]
   
   #rudimentary authentication
   http_basic_authenticate_with name: "oha", password: "progress_bars", except: :index
@@ -42,18 +42,18 @@ class GrantsController < ApplicationController
     @fy16 = @grants.where("fiscal_year = ?", 2016)
     
     #by grant type query
-    @ahahui = @grants.where("grant_type = ?", "Ahahui").count
-    @bot = @grants.where("grant_type = ?", "BOT Initiative").count
-    @community_grant = @grants.where("grant_type = ?", "Community Grant").count
-    @sponsorship = @grants.where("grant_type = ?", "Sponsorship").count
+    @ahahui = @grants.where("grant_type = ?", "Ahahui")
+    @bot = @grants.where("grant_type = ?", "BOT Initiative")
+    @community_grant = @grants.where("grant_type = ?", "Community Grant")
+    @sponsorship = @grants.where("grant_type = ?", "Sponsorship")
     
     #by strategic priority
-    @land = @grants.where("strategic_priority = ?", "Land & Water").count
-    @edu = @grants.where("strategic_priority = ?", "Education").count
+    @land = @grants.where("strategic_priority = ?", "Land & Water")
+    @edu = @grants.where("strategic_priority = ?", "Education")
     @eco = @grants.where("strategic_priority = ?", "Economic Self-Sufficiency").count
-    @health = @grants.where("strategic_priority = ?", "Health").count
-    @gov = @grants.where("strategic_priority = ?", "Governance").count
-    @culture = @grants.where("strategic_priority = ?", "Culture").count
+    @health = @grants.where("strategic_priority = ?", "Health")
+    @gov = @grants.where("strategic_priority = ?", "Governance")
+    @culture = @grants.where("strategic_priority = ?", "Culture")
  
  	#export to all data to excel
 	respond_to do |f|
@@ -64,60 +64,6 @@ class GrantsController < ApplicationController
 		end
     end
  
-  end
-
-  # GET /grants/1
-  # GET /grants/1.json
-  def show
-  end
-
-  # GET /grants/new
-  def new
-    @grant = Grant.new
-  end
-
-  # GET /grants/1/edit
-  def edit
-  end
-
-  # POST /grants
-  # POST /grants.json
-  def create
-    @grant = Grant.new(grant_params)
-
-    respond_to do |format|
-      if @grant.save
-        format.html { redirect_to grants_url, notice: 'Grant was successfully created.' }
-        format.json { render :index, status: :created, location: @grant }
-      else
-        format.html { render :new }
-        format.json { render json: @grant.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /grants/1
-  # PATCH/PUT /grants/1.json
-  def update
-    respond_to do |format|
-      if @grant.update(grant_params)
-        format.html { redirect_to grants_url, notice: 'Grant was successfully updated.' }
-        format.json { render :index, status: :ok, location: @grant }
-      else
-        format.html { render :edit }
-        format.json { render json: @grant.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /grants/1
-  # DELETE /grants/1.json
-  def destroy
-    @grant.destroy
-    respond_to do |format|
-      format.html { redirect_to grants_url, notice: 'Grant was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
 
   private
