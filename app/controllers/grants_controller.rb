@@ -34,16 +34,26 @@ class GrantsController < ApplicationController
     @strategic_priority_count = @grants.group(:strategic_priority).order(:strategic_priority).count
 	@strategic_results_count = @grants.group(:strategic_results).order(:strategic_results).count
 	@location_count = @grants.group(:location).order(:location).count
-	@uLocations = Array.new
 	
-	@grants.select(:location).distinct.each do |loc|
-		@uLocations.push(loc.location)
-	end
+	#These are arrays of the unique values for each parameter. Unique locations, unique fiscal years...
+	@uLocations = @grants.select(:location).distinct.pluck(:location)	
+	@uYears = @grants.select(:fiscal_year).distinct.order(:fiscal_year).pluck(:fiscal_year)
+	
 	@sumLocations = Array.new
-	
 	@uLocations.each do |loc|
 		@sumLocations.push(@grants.where(location: loc).sum("amount").to_f)
 	end
+		
+	#TODO: 2-d array of grants by year, and then by location, specifying amount
+	@amountPerYearByLocation = Array.new
+	@uLocations.each do |loc|
+		@locArray = Array.new
+		@uYears.each do |year|
+			@locArray.push(@grants.where(location: loc).where(fiscal_year: year).sum("amount").to_f)
+		end
+		@amountPerYearByLocation.push(@locArray)
+	end
+	
 	#fy query
     @fy13 = @grants.where("fiscal_year = ?", 2013)
     @fy14 = @grants.where("fiscal_year = ?", 2014)
