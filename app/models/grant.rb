@@ -11,6 +11,19 @@ LOCATION_SELECT = ["continent", "hawaii", "international", "kauai", "lanai", "ma
 validates :fiscal_year, :grant_type, :organization, :project, :amount, :location, :strategic_priority, :strategic_results, :grantStatusID, :presence => true
 =end
 
+	def concatStrategic
+		strategic = strategic_priority + ': ' + strategic_results
+	end
+
+	def totalCheck
+		if total_served && nh_served == 0
+			a = "N/A"
+		else
+			a = total_served.to_s + "/" + nh_served.to_s
+		end
+		return a
+	end
+	
 	#import csv file data
 	#require 'csv'
 	def self.import(file)

@@ -35,22 +35,6 @@
 	<!-- load bar chart with options -->
 	<%= render 'barChartOptions' %>
 
-	<br/><h2>All Data</h2>
-	<!-- spit out data block -->
-	<% @grants.each do |grant| %>
-		Fiscal Year: <%= grant.fiscal_year %><br/>
-		Grant type: <%= grant.grant_type %><br/>
-		Organization: <%= grant.organization %><br/>      
-		Project: <%= grant.project %><br/>      
-		Amount: <%= grant.amount %><br/>      
-		Location: <%= grant.location %><br/>     
-		Strategic priority: <%= grant.strategic_priority %><br/>       
-		Strategic results: <%= grant.strategic_results %><br/>        
-		Total served: <%= grant.total_served %><br/>    
-		Nh served: <%= grant.nh_served %><br/>       
-		Grantstatusid: <%= grant.grantStatusID %><br/><br/>
-		
-	<% end %>	
 <% else %>	
 <% end %>
 

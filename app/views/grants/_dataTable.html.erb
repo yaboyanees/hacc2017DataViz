@@ -13,20 +13,18 @@
 <table id="example" class="display" cellspacing="0" width="100%">
 	<thead>
 		<tr>
+			<th>Location</th>
 			<th>Fiscal Year</th>
 			<th>Type</th>
-			<th>Organization</th>
-			<th width = "40%">Project</th>
+			<th width = "40%">Organization</th>
+			<!--<th>Project</th>-->
 			<th>Amount</th>
 			<th>Location</th>
-			<th>Strategic Priority</th>
-			<th>Strategic Results</th>
-			<th>Total Served</th>
-			<th>Native Hawaiians Served</th>
-			<th>Status</th>
+			<th>Strategic Priority & Results</th>
+			<th>Native/Total Served</th>
 		</tr>
 	</thead>
-	<tfoot>
+	<!-- <tfoot>
 		<tr>
 			<th>Fiscal Year</th>
 			<th>Type</th>
@@ -40,23 +38,25 @@
 			<th>Native Hawaiians Served</th>
 			<th>Status</th>
 		</tr>
-	</tfoot>
+	</tfoot> -->
 	
 	<tbody>
 		<% @grants.each do |grant| %>
 		
 		<tr>
+			<td></td>
 			<td><%= grant.fiscal_year %></td>
 			<td><%= grant.grant_type %></td>
-			<td><%= grant.organization %></td>
-			<td width="40%"><%= grant.project %></td>
-			<td><%= grant.amount %></td>
+			<td width = "40%">
+				<div class="tooltip">
+					<%= grant.organization %>
+					<span class="tooltiptext"><%= grant.project %><br/>Status: <%= grant.grantStatusID %></span>
+				</div>
+			</td>
+			<td><%= number_to_currency(grant.amount) %></td>
 			<td><%= grant.location %></td>
-			<td><%= grant.strategic_priority %></td>
-			<td><%= grant.strategic_results %></td>
-			<td><%= grant.total_served %></td>
-			<td><%= grant.nh_served %></td>
-			<td><%= grant.grantStatusID %></td>
+			<td><%= grant.concatStrategic %></td>
+			<td><%= grant.totalCheck %></td>
 		</tr>
 		
 	<% end %>	
@@ -80,14 +80,52 @@ $.fn.dataTable.ext.search.push(
         }
         return false;
     }
-);
- 
+);  
+                 
 $(document).ready(function() {
-    var table = $('#example').DataTable();
-     
+    var table = $('#example').DataTable({
+        "columnDefs": [
+            { "visible": false, "targets": 5 }
+        ],
+        "order": [[ 5, 'asc' ]],
+        "displayLength": 100,
+        "drawCallback": function ( settings ) {
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+
+            var last=null;
+ 
+            var groupadmin = []; 
+ 
+            api.column(5, {page:'current'} ).data().each( function ( group, i ) {
+
+                if ( last !== group ) {
+  
+                    $(rows).eq( i ).before(
+                        '<tr class="group" id="'+i+'"><td colspan="9">'+group+'</td></tr>'
+                    );
+                    groupadmin.push(i);
+                    last = group;
+                }
+            } );
+            
+            for( var k=0; k < groupadmin.length; k++){
+				  // Code added for adding class to sibling elements as "group_<id>"  
+                  $("#"+groupadmin[k]).nextUntil("#"+groupadmin[k+1]).addClass(' group_'+groupadmin[k]); 
+                  // Code added for adding Toggle functionality for each group
+                  $("#"+groupadmin[k]).click(function(){
+                  	var gid = $(this).attr("id");
+                	$(".group_"+gid).slideToggle(300);
+                  });
+                 
+            }
+        }
+    } );
+    
     // Event listener to the two range filtering inputs to redraw on input
     $('#min, #max').keyup( function() {
         table.draw();
     } );
 } );
+
 </script>
