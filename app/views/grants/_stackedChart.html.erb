@@ -6,7 +6,7 @@ Highcharts.chart('stacked', {
         type: 'column'
     },
     title: {
-        text: 'Stacked column chart'
+        text: 'Grant Money Awarded Per Year, by Location'
     },
     xAxis: {
         categories:  <%= raw @uYears %> 
@@ -14,7 +14,7 @@ Highcharts.chart('stacked', {
     yAxis: {
         min: 0,
         title: {
-            text: 'Grant Money Per Year, By Location'
+            text: 'Grant Money'
         },
         stackLabels: {
             enabled: true,
