@@ -35,23 +35,24 @@ class GrantsController < ApplicationController
 	@strategic_results_count = @grants.group(:strategic_results).order(:strategic_results).count
 	@location_count = @grants.group(:location).order(:location).count
 	
-<<<<<<< HEAD
-	@grants.select(:location).distinct.each do |loc|
-		@uLocations.push(loc.location)
-	end
-	
-	@sumLocations = Array.new
-=======
 	#These are arrays of the unique values for each parameter. Unique locations, unique fiscal years...
 	@uLocations = @grants.select(:location).distinct.pluck(:location)	
 	@uYears = @grants.select(:fiscal_year).distinct.order(:fiscal_year).pluck(:fiscal_year)
->>>>>>> 5148ccc45afd9f3f7ee37fdf58440baa7f263b04
 	
 	@sumLocations = Array.new
 	@uLocations.each do |loc|
 		@sumLocations.push(@grants.where(location: loc).sum("amount").to_f)
 	end
-<<<<<<< HEAD
+		
+	#TODO: 2-d array of grants by year, and then by location, specifying amount
+	@amountPerYearByLocation = Array.new
+	@uLocations.each do |loc|
+			@locArray = Array.new
+			@uYears.each do |year|
+				@locArray.push(@grants.where(location: loc).where(fiscal_year: year).sum("amount").to_f)
+			end
+			@amountPerYearByLocation.push(@locArray)
+	end
 
 #Random Queries that may or may not be adopted	
 #fy query
@@ -75,38 +76,7 @@ class GrantsController < ApplicationController
 @gov = @grants.where("strategic_priority = ?", "Governance")
 @culture = @grants.where("strategic_priority = ?", "Culture")
 =end
-=======
 		
-	#TODO: 2-d array of grants by year, and then by location, specifying amount
-	@amountPerYearByLocation = Array.new
-	@uLocations.each do |loc|
-			@locArray = Array.new
-			@uYears.each do |year|
-				@locArray.push(@grants.where(location: loc).where(fiscal_year: year).sum("amount").to_f)
-			end
-			@amountPerYearByLocation.push(@locArray)
-	end
-	
-	#fy query
-    @fy13 = @grants.where("fiscal_year = ?", 2013)
-    @fy14 = @grants.where("fiscal_year = ?", 2014)
-    @fy15 = @grants.where("fiscal_year = ?", 2015)
-    @fy16 = @grants.where("fiscal_year = ?", 2016)
-    
-    #by grant type query
-    @ahahui = @grants.where("grant_type = ?", "Ahahui")
-    @bot = @grants.where("grant_type = ?", "BOT Initiative")
-    @community_grant = @grants.where("grant_type = ?", "Community Grant")
-    @sponsorship = @grants.where("grant_type = ?", "Sponsorship")
-    
-    #by strategic priority
-    @land = @grants.where("strategic_priority = ?", "Land & Water")
-    @edu = @grants.where("strategic_priority = ?", "Education")
-    @eco = @grants.where("strategic_priority = ?", "Economic Self-Sufficiency").count
-    @health = @grants.where("strategic_priority = ?", "Health")
-    @gov = @grants.where("strategic_priority = ?", "Governance")
-    @culture = @grants.where("strategic_priority = ?", "Culture")
->>>>>>> 5148ccc45afd9f3f7ee37fdf58440baa7f263b04
  
  	#export to all data to excel
 	respond_to do |f|
