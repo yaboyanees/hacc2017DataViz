@@ -50,12 +50,12 @@ Highcharts.chart('stacked', {
     },
     series: [
 	<% index = 0
-	while index < @uLocations.length - 2 %>
-	{
-        name: '<%= raw @uLocations[index] %>',
-        data: <%= raw @amountPerYearByLocation[index] %>
+	while index < @uLocations.length - 1%>
+		{
+			name: '<%= raw @uLocations[index] %>',
+			data: <%= raw @amountPerYearByLocation[index] %>
+	    },
 		<% index = index + 1 %>
-    },
 	<% end %>
 	{
         name: '<%= raw @uLocations[index] %>',

@@ -47,11 +47,11 @@ class GrantsController < ApplicationController
 	#TODO: 2-d array of grants by year, and then by location, specifying amount
 	@amountPerYearByLocation = Array.new
 	@uLocations.each do |loc|
-		@locArray = Array.new
-		@uYears.each do |year|
-			@locArray.push(@grants.where(location: loc).where(fiscal_year: year).sum("amount").to_f)
-		end
-		@amountPerYearByLocation.push(@locArray)
+			@locArray = Array.new
+			@uYears.each do |year|
+				@locArray.push(@grants.where(location: loc).where(fiscal_year: year).sum("amount").to_f)
+			end
+			@amountPerYearByLocation.push(@locArray)
 	end
 	
 	#fy query
