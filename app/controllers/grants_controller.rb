@@ -39,30 +39,35 @@ class GrantsController < ApplicationController
 	@grants.select(:location).distinct.each do |loc|
 		@uLocations.push(loc.location)
 	end
+	
 	@sumLocations = Array.new
 	
 	@uLocations.each do |loc|
 		@sumLocations.push(@grants.where(location: loc).sum("amount").to_f)
 	end
-	#fy query
-    @fy13 = @grants.where("fiscal_year = ?", 2013)
-    @fy14 = @grants.where("fiscal_year = ?", 2014)
-    @fy15 = @grants.where("fiscal_year = ?", 2015)
-    @fy16 = @grants.where("fiscal_year = ?", 2016)
-    
-    #by grant type query
-    @ahahui = @grants.where("grant_type = ?", "Ahahui")
-    @bot = @grants.where("grant_type = ?", "BOT Initiative")
-    @community_grant = @grants.where("grant_type = ?", "Community Grant")
-    @sponsorship = @grants.where("grant_type = ?", "Sponsorship")
-    
-    #by strategic priority
-    @land = @grants.where("strategic_priority = ?", "Land & Water")
-    @edu = @grants.where("strategic_priority = ?", "Education")
-    @eco = @grants.where("strategic_priority = ?", "Economic Self-Sufficiency").count
-    @health = @grants.where("strategic_priority = ?", "Health")
-    @gov = @grants.where("strategic_priority = ?", "Governance")
-    @culture = @grants.where("strategic_priority = ?", "Culture")
+
+#Random Queries that may or may not be adopted	
+#fy query
+=begin
+@fy13 = @grants.where("fiscal_year = ?", 2013)
+@fy14 = @grants.where("fiscal_year = ?", 2014)
+@fy15 = @grants.where("fiscal_year = ?", 2015)
+@fy16 = @grants.where("fiscal_year = ?", 2016)
+
+#by grant type query
+@ahahui = @grants.where("grant_type = ?", "Ahahui")
+@bot = @grants.where("grant_type = ?", "BOT Initiative")
+@community_grant = @grants.where("grant_type = ?", "Community Grant")
+@sponsorship = @grants.where("grant_type = ?", "Sponsorship")
+
+#by strategic priority
+@land = @grants.where("strategic_priority = ?", "Land & Water")
+@edu = @grants.where("strategic_priority = ?", "Education")
+@eco = @grants.where("strategic_priority = ?", "Economic Self-Sufficiency").count
+@health = @grants.where("strategic_priority = ?", "Health")
+@gov = @grants.where("strategic_priority = ?", "Governance")
+@culture = @grants.where("strategic_priority = ?", "Culture")
+=end
  
  	#export to all data to excel
 	respond_to do |f|
