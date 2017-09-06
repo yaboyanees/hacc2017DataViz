@@ -2,25 +2,28 @@
 
 <script>
 Highcharts.chart('stacked-grouped-bar-chart', {
-
     chart: {
         type: 'column'
     },
-
     title: {
-        text: 'Total fruit consumtion, grouped by gender'
+        text: 'Grant Money Awarded Per Year, by Location'
     },
-
     xAxis: {
-        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+        categories: <%= raw @uYears %> 
     },
-
     yAxis: {
         allowDecimals: false,
         min: 0,
         title: {
-            text: 'Number of fruits'
-        }
+            text: 'Grant Money'
+        },
+		stackLabels: {
+            enabled: true,
+            style: {
+                fontWeight: 'bold',
+                color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+            }
+		}
     },
 
     tooltip: {
@@ -37,22 +40,26 @@ Highcharts.chart('stacked-grouped-bar-chart', {
         }
     },
 
-    series: [{
-        name: 'John',
-        data: [5, 3, 4, 7, 2],
-        stack: 'male'
-    }, {
-        name: 'Joe',
-        data: [3, 4, 4, 2, 5],
-        stack: 'male'
-    }, {
-        name: 'Jane',
-        data: [2, 5, 6, 2, 1],
-        stack: 'female'
-    }, {
-        name: 'Janet',
-        data: [3, 0, 4, 4, 3],
-        stack: 'female'
+    series: [
+	<% index = 0
+		skipStatewide = 0
+		statewideIndex = -1;
+	while index + skipStatewide < @uLocations.length %>
+		{
+			name: '<%= raw @uLocations[index + skipStatewide] %>',
+			data: <%= raw @amountPerYearByLocation[index + skipStatewide] %>,
+			stack: 'Not Statewide'
+	    },
+		<% index = index + 1
+			if @uLocations[index] == "Statewide"
+				skipStatewide = 1
+				statewideIndex = index
+			end %>
+	<% end %>
+	{
+        name: '<%= raw @uLocations[statewideIndex] %>',
+        data: <%= raw @amountPerYearByLocation[statewideIndex] %>,
+		stack: 'Statewide'
     }]
 });
 </script>

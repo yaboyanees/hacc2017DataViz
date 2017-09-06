@@ -6,15 +6,15 @@ Highcharts.chart('stacked', {
         type: 'column'
     },
     title: {
-        text: 'Stacked column chart'
+        text: 'Grant Money Awarded Per Year, by Location'
     },
     xAxis: {
-        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+        categories:  <%= raw @uYears %> 
     },
     yAxis: {
         min: 0,
         title: {
-            text: 'Total fruit consumption'
+            text: 'Grant Money'
         },
         stackLabels: {
             enabled: true,
@@ -48,15 +48,19 @@ Highcharts.chart('stacked', {
             }
         }
     },
-    series: [{
-        name: 'John',
-        data: [5, 3, 4, 7, 2]
-    }, {
-        name: 'Jane',
-        data: [2, 2, 3, 2, 1]
-    }, {
-        name: 'Joe',
-        data: [3, 4, 4, 2, 5]
-    }]
+    series: [
+	<% index = 0
+	while index < @uLocations.length - 1%>
+		{
+			name: '<%= raw @uLocations[index] %>',
+			data: <%= raw @amountPerYearByLocation[index] %>
+	    },
+		<% index = index + 1 %>
+	<% end %>
+	{
+        name: '<%= raw @uLocations[index] %>',
+        data: <%= raw @amountPerYearByLocation[index] %>
+    }
+	]
 });
 </script>
