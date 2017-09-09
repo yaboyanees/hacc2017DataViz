@@ -31,11 +31,17 @@ class GrantsController < ApplicationController
 	preferredY = "amount"
     @grants = Grant.all
     @grant_count = @grants.count
-    @year_count = @grants.group(:fiscal_year).order(:fiscal_year).count
-    @grant_type_count = @grants.group(:grant_type).order(:grant_type).count
-    @strategic_priority_count = @grants.group(:strategic_priority).order(:strategic_priority).count
-	@strategic_results_count = @grants.group(:strategic_results).order(:strategic_results).count
-	@location_count = @grants.group(:location).order(:location).count
+	@award_amount = @grants.pluck(:amount).sum
+	@served = @grants.pluck("sum(nh_served)", "sum(total_served)")
+	@inProgress = @grants.where(grantStatusID: 2).count
+
+=begin
+@year_count = @grants.group(:fiscal_year).order(:fiscal_year).count
+@grant_type_count = @grants.group(:grant_type).order(:grant_type).count
+@strategic_priority_count = @grants.group(:strategic_priority).order(:strategic_priority).count
+@strategic_results_count = @grants.group(:strategic_results).order(:strategic_results).count
+@location_count = @grants.group(:location).order(:location).count
+=end
 	
 	#These are arrays of the unique values for each parameter. Unique locations, unique fiscal years...
 	@uLocations = @grants.distinct.pluck(:location)	

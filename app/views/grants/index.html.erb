@@ -1,19 +1,45 @@
 <p id="flashNotice"><%= notice %></p>
+<div id="dashboard-rollup">
+	<div class="card purple">
+		<p class="stat-number"><%= @grant_count %></p>
+		<p class="stat-title">Total Projects</p>
+		<p class="more-info">More Info</p>
+	</div>
+	<div class="card red">
+		<p class="stat-number"><%= @inProgress %></p>
+		<p class="stat-title">Grants In Progress</p>
+		<p class="more-info">More Info</p>
+	</div>
+	<div class="card blue">
+		<p class="stat-number"><%= @uPriorities.count %></p>
+		<p class="stat-title">Strategic Priorities</p>
+		<p class="more-info">More Info</p>
+	</div>
+	<div class="card orange">
+		<p class="stat-number"><%= number_with_delimiter(@served[0].first) %> / <%=  number_with_delimiter(@served[0].second) %></p>
+		<p class="stat-title">Native Hawaiins / Total Served</p>
+		<p class="more-info">More Info</p>
+	</div>
+	<div class="card green">
+		<p class="stat-number">$<%= number_to_human(@award_amount, precision:3) %></p>
+		<p class="stat-title">Total Awarded</p>
+		<p class="more-info">More Info</p>
+	</div>
+</div>
 
-<h2>Mass Upload</h2>
-<%= render 'massUpload' %><br/>
+<%= render 'massUpload' %>
 
 <% if @grants.present? %>
 	<%= link_to 'Export All Data', grants_url(format: "xls") %> | <%= link_to "View PDF Report", grants_path(@grants, :format => :pdf) %> | <%= link_to 'Delete All Data', kill_grants_url, :method => :delete %><br/>
 
-	<h2>DB Sample Queries</h2>
+	<!--<h2>DB Sample Queries</h2>
 	There are currently <b><%= @grant_count %></b> records in the Database!<br/>
 	Year Count <b><%= @year_count %></b><br/>
 	Grant Type Count <b><%= @grant_type_count %></b><br/>
 	Strategic Priority Count <b><%= @strategic_priority_count %></b><br/> 
 	Strategic Results Count <b><%= @strategic_results_count %></b><br/>
 	Location Count <b><%= @location_count %></b><br/>
-	<br/>
+	<br/>-->
 
 	<h2>DataTable Example</h2>
 	<!-- load data table -->
