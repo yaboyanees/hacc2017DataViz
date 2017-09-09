@@ -1,7 +1,9 @@
 <div id="stacked" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<button id="stacked-location">By Location</button>
+<button id="stacked-priority">By Strategic Priority</button><br/>
 
 <script>
-Highcharts.chart('stacked', {
+var stackedChart = Highcharts.chart('stacked', {
     chart: {
         type: 'column'
     },
@@ -63,4 +65,70 @@ Highcharts.chart('stacked', {
     }
 	]
 });
+
+$('#stacked-location').click(function () {
+stackedChart.update({
+       title: {
+        text: 'Grant Money Awarded Per Year, by Location'
+		}
+    });
+	
+	var newSeries = [
+	<% index = 0
+	while index < @uLocations.length - 1%>
+		{
+			name: '<%= raw @uLocations[index] %>',
+			data: <%= raw @amountPerYearByLocation[index] %>
+	    },
+		<% index = index + 1 %>
+	<% end %>
+	{
+        name: '<%= raw @uLocations[index] %>',
+        data: <%= raw @amountPerYearByLocation[index] %>
+    }
+	];
+	
+	for (var i = stackedChart.series.length-1; i>=0; i--) {
+            stackedChart.series[i].remove();
+        }
+         for (var y = 0; y < newSeries.length; y++) {
+            stackedChart.addSeries(newSeries[y]);
+        }
+		
+	stackedChart.redraw();
+});
+
+$('#stacked-priority').click(function () {
+stackedChart.update({
+       title: {
+        text: 'Grant Money Awarded Per Year, by Strategic Priority'
+		}
+    });
+	
+	var newSeries = [
+	<% index = 0
+	while index < @uPriorities.length - 1%>
+		{
+			name: '<%= raw @uPriorities[index] %>',
+			data: <%= raw @amountPerYearByPriority[index] %>
+	    },
+		<% index = index + 1 %>
+	<% end %>
+	{
+        name: '<%= raw @uPriorities[index] %>',
+        data: <%= raw @amountPerYearByPriority[index] %>
+    }
+	]
+	
+	for (var i = stackedChart.series.length-1; i>=0; i--) {
+            stackedChart.series[i].remove();
+        }
+        for (var y = 0; y < newSeries.length; y++) {
+            stackedChart.addSeries(newSeries[y]);
+        }
+		
+	stackedChart.redraw();
+	
+});
+
 </script>
