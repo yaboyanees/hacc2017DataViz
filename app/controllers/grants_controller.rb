@@ -34,14 +34,6 @@ class GrantsController < ApplicationController
 	@award_amount = @grants.pluck(:amount).sum
 	@served = @grants.pluck("sum(nh_served)", "sum(total_served)")
 	@inProgress = @grants.where(grantStatusID: 2).count
-
-=begin
-@year_count = @grants.group(:fiscal_year).order(:fiscal_year).count
-@grant_type_count = @grants.group(:grant_type).order(:grant_type).count
-@strategic_priority_count = @grants.group(:strategic_priority).order(:strategic_priority).count
-@strategic_results_count = @grants.group(:strategic_results).order(:strategic_results).count
-@location_count = @grants.group(:location).order(:location).count
-=end
 	
 	#These are arrays of the unique values for each parameter. Unique locations, unique fiscal years...
 	@uLocations = @grants.distinct.pluck(:location)	
@@ -80,32 +72,6 @@ class GrantsController < ApplicationController
 			end
 			@amountPerYearByPriority.push(@priArray)
 	end
-	
-
-	
-	
-#Random Queries that may or may not be adopted	
-#fy query
-=begin
-@fy13 = @grants.where("fiscal_year = ?", 2013)
-@fy14 = @grants.where("fiscal_year = ?", 2014)
-@fy15 = @grants.where("fiscal_year = ?", 2015)
-@fy16 = @grants.where("fiscal_year = ?", 2016)
-
-#by grant type query
-@ahahui = @grants.where("grant_type = ?", "Ahahui")
-@bot = @grants.where("grant_type = ?", "BOT Initiative")
-@community_grant = @grants.where("grant_type = ?", "Community Grant")
-@sponsorship = @grants.where("grant_type = ?", "Sponsorship")
-
-#by strategic priority
-@land = @grants.where("strategic_priority = ?", "Land & Water")
-@edu = @grants.where("strategic_priority = ?", "Education")
-@eco = @grants.where("strategic_priority = ?", "Economic Self-Sufficiency").count
-@health = @grants.where("strategic_priority = ?", "Health")
-@gov = @grants.where("strategic_priority = ?", "Governance")
-@culture = @grants.where("strategic_priority = ?", "Culture")
-=end
 		
  
  	#export to all data to excel

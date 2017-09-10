@@ -24,6 +24,15 @@ validates :fiscal_year, :grant_type, :organization, :project, :amount, :location
 		return a
 	end
 	
+	def humanStatus
+		if grantStatusID = 1
+			a = "Funded"
+		else
+			a = "In-Progress"
+		end
+		return a
+	end
+	
 	#import csv file data
 	#require 'csv'
 	def self.import(file)

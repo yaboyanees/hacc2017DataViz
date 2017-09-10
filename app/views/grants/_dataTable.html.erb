@@ -50,7 +50,7 @@
 			<td width = "40%">
 				<div class="tooltip">
 					<%= grant.organization %>
-					<span class="tooltiptext"><%= grant.project %><br/>Status: <%= grant.grantStatusID %></span>
+					<span class="tooltiptext"><%= grant.project %><br/>Grant <%= grant.humanStatus %></span>
 				</div>
 			</td>
 			<td><%= number_to_currency(grant.amount) %></td>
