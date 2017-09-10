@@ -50,22 +50,13 @@ class GrantsController < ApplicationController
 	@uResults = @grants.distinct.pluck(:strategic_results)
 	
 	#Total funding, grouped by location
-	@sumLocations = Array.new
-	@uLocations.each do |loc|
-		@sumLocations.push(@grants.where(location: loc).sum(preferredY).to_f)
-	end
+	@sumLocations = @grants.group("location").pluck("sum(amount)")
 		
 	#Total funding, grouped by strategic priority
-	@sumPriorities = Array.new
-	@uPriorities.each do |pri|
-		@sumPriorities.push(@grants.where(strategic_priority: pri).sum(preferredY).to_f)
-	end
+	@sumPriorities = @grants.group("strategic_priority").pluck("sum(amount)")
 	
 	#total funding, grouped by strategic results
-	@sumResults = Array.new
-	@uResults.each do |res|
-		@sumResults.push(@grants.where(strategic_results: res).sum(preferredY).to_f)
-	end
+	@sumResults = @grants.group("strategic_results").pluck("sum(amount)")
 	
 	#This is a 2-d array of the preferred measurement for each island, for each year.
 	#Inner array is each year. Outer array is location.
@@ -78,7 +69,6 @@ class GrantsController < ApplicationController
 			end
 			@amountPerYearByLocation.push(@locArray)
 	end
-	
 	#This is a 2-d array of the preferred measurement for each strategic priority, for each year.
 	#Inner array is each year. Outer array is location.
 	#For example, [0][0] would be a priority in 2013, but [0][1] is 2014.
