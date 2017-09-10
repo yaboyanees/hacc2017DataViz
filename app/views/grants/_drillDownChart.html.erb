@@ -6,7 +6,7 @@
 
 var priority = true;
 // Create the chart
-var drillDownChart = Highcharts.chart('drill-down', {
+drillDownChart = Highcharts.chart('drill-down', {
     chart: {
         type: 'pie'
     },
@@ -83,91 +83,32 @@ var drillDownChart = Highcharts.chart('drill-down', {
     }
 });
 
-$('#by-location').click(function (e) {
-drillDownChart.update({
-       title: {
-        text: 'Grant funding by Location'
-		}
-    });
-	
-	var newSeries = [{
-        name: 'Grant funding by Location',
-        colorByPoint: true,
-        data: [
-		<% index = 0
-	while index < @uLocations.length - 1 %>
-		{
-			name: '<%= raw @uLocations[index] %>',
-			y: <%= raw @sumLocations[index] %>,
-			drilldown: '<%= raw @uLocations[index] %>'
-	    },
-		<% index = index + 1 %>
-	<% end %>
-	{
-        name: '<%= raw @uLocations[index] %>',
-        y: <%= raw @sumLocations[index] %>,
-		drilldown: '<%= raw @uLocations[index] %>'
-    }
-		]
-    }];
-	
-	for (var i = drillDownChart.series.length-1; i>=0; i--) {
-            drillDownChart.series[i].remove();
-        }
-        for (var y = newSeries.length-1; y >= 0; y--) {
-            drillDownChart.addSeries(newSeries[y]);
-        }
-		
-	var newDrilldown = [{
-	series: [
-		<% index = 0
-	while index < @uLocations.length - 1%>
-		{
-			name: '<%= raw @uLocations[index] %>',
-			id: '<%= raw @uLocations[index] %>',
-			data: [
-				<% innerIndex = 0
-				while innerIndex < @amountPerYearByLocation[index].length - 1 %>
-					['<%= raw @uYears[innerIndex] %>', <%= raw @amountPerYearByLocation[index][innerIndex] %>],
-					<% innerIndex = innerIndex + 1 %>
-				<% end %>
-				['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByLocation[index][innerIndex] %>]
-			]
-	    },
-		<% index = index + 1 %>
-	<% end %>
-		{
-			name: '<%= raw @uLocations[index] %>',
-			id: '<%= raw @uLocations[index] %>',
-			data: [
-				<% innerIndex = 0
-				while innerIndex < @amountPerYearByLocation[index].length - 1 %>
-					['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByLocation[index][innerIndex] %>],
-					<% innerIndex = innerIndex + 1 %>
-				<% end %>
-				['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByLocation[index][innerIndex] %>]
-			]
-	    }
-		]
-    }];
-	alert(newDilldown.series.length);
-	for (var i = drillDownChart.options.drilldown.series.length-1; i>=0; i--) {
-            drillDownChart.options.drilldown.series[i].remove();
-        }
-        for (var y = newDrillDown.series.length-1; y >= 0; y--) {
-            drillDownChart.options.drilldown.addSeries(newDilldown.series[y]);
-        }
-	drillDownChart.redraw();
-});
-
 $('#by-priority').click(function (e) {
-	drillDownChart.update({
-       title: {
-        text: 'Grant funding by Location'
-		}
-    });
-	
-	 var newSeries = [{
+	drillDownChart.destroy();
+    drillDownChart2 = new Highcharts.chart('drill-down', {
+    chart: {
+        type: 'pie'
+    },
+    title: {
+        text: 'Grant funding by Strategic Priority'
+    },
+    subtitle: {
+        text: 'Click the slices to drill down. Source: netmarketshare.com.'
+    },
+    plotOptions: {
+        series: {
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}: {point.y:.1f}'
+            }
+        }
+    },
+
+    tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}<br/>'
+    },
+    series: [{
         name: 'Strategic Priorities',
         colorByPoint: true,
         data: [
@@ -186,15 +127,8 @@ $('#by-priority').click(function (e) {
 		drilldown: '<%= raw @uPriorities[index] %>'
     }
 		]
-    }];
-	for (var i = drillDownChart.series.length-1; i>=0; i--) {
-            drillDownChart.series[i].remove();
-        }
-        for (var y = newSeries.length-1; y >= 0; y--) {
-            drillDownChart.addSeries(newSeries[y]);
-        }
-		
-    var newDrilldown = {
+    }],
+    drilldown: {
         series: [
 		<% index = 0
 	while index < @uPriorities.length - 1%>
@@ -226,10 +160,92 @@ $('#by-priority').click(function (e) {
 	    }
 		]
     }
-	for (var i = drillDownChart.options.drilldown.series.length-1; i>=0; i--) {
-            drillDownChart.options.drilldown.series[i].remove();
+	
+});
+	drillDownChart = drillDownChart2;
+});
+
+
+$('#by-location').click(function (e) {
+	drillDownChart.destroy();
+var drillDownChart2 = new Highcharts.chart('drill-down', {
+    chart: {
+        type: 'pie'
+    },
+    title: {
+        text: 'Grant funding by Location'
+    },
+    subtitle: {
+        text: 'Click the slices to drill down. Source: netmarketshare.com.'
+    },
+    plotOptions: {
+        series: {
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}: {point.y:.1f}'
+            }
         }
-	drillDownChart.redraw();
+    },
+
+    tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}<br/>'
+    },
+    series: [{
+        name: 'Locations',
+        colorByPoint: true,
+        data: [
+		<% index = 0
+	while index < @uLocations.length - 1 %>
+		{
+			name: '<%= raw @uLocations[index] %>',
+			y: <%= raw @sumLocations[index] %>,
+			drilldown: '<%= raw @uLocations[index] %>'
+	    },
+		<% index = index + 1 %>
+	<% end %>
+	{
+        name: '<%= raw @uLocations[index] %>',
+        y: <%= raw @sumLocations[index] %>,
+		drilldown: '<%= raw @uLocations[index] %>'
+    }
+		]
+    }],
+    drilldown: {
+        series: [
+		<% index = 0
+	while index < @uLocations.length - 1%>
+		{
+			name: '<%= raw @uLocations[index] %>',
+			id: '<%= raw @uLocations[index] %>',
+			data: [
+				<% innerIndex = 0
+				while innerIndex < @amountPerYearByLocation[index].length - 1 %>
+					['<%= raw @uYears[innerIndex] %>', <%= raw @amountPerYearByLocation[index][innerIndex] %>],
+					<% innerIndex = innerIndex + 1 %>
+				<% end %>
+				['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByLocation[index][innerIndex] %>]
+			]
+	    },
+		<% index = index + 1 %>
+	<% end %>
+		{
+			name: '<%= raw @uLocations[index] %>',
+			id: '<%= raw @uLocations[index] %>',
+			data: [
+				<% innerIndex = 0
+				while innerIndex < @amountPerYearByLocation[index].length - 1 %>
+					['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByLocation[index][innerIndex] %>],
+					<% innerIndex = innerIndex + 1 %>
+				<% end %>
+				['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByLocation[index][innerIndex] %>]
+			]
+	    }
+		]
+    }
+	
+});
+	drillDownChart = drillDownChart2;
 });
 
 
