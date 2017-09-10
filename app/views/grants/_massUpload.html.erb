@@ -1,5 +1,7 @@
-<h2>Mass Upload</h2>
-<%= form_tag import_grants_path, multipart: true do %>
-	<%= file_field_tag :file %>
-	<%= submit_tag "Upload" %>
-<% end %><br/>
+<div class="mass-upload">
+	<%= form_tag import_grants_path, multipart: true do %>
+		<%= file_field_tag :file %>
+		<%= submit_tag "Upload" %>
+	<% end %>
+	<%= link_to 'Export All Data', grants_url(format: "xls") %> | <%= link_to "View PDF Report", grants_path(@grants, :format => :pdf) %> | <%= link_to 'Delete All Data', kill_grants_url, :method => :delete %>
+</div>
