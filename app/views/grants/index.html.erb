@@ -41,25 +41,26 @@
 	Location Count <b><%= @location_count %></b><br/>
 	<br/>-->
 
-	<h2>DataTable Example</h2>
-	<!-- load data table -->
-	<%= render 'dataTable' %>	
 
-	<h2>Random Static Chart Examples</h2>	
+	<h2>Charts</h2>	
 	<!-- load drill-down chart -->
 	<%= render 'drillDownChart' %>
-	
+	<br/><br/>
 	<!-- load stacked chart -->
 	<%= render 'stackedChart' %>
 	
-	<!-- load grouped bar chart -->
-	<%= render 'groupedBarChart' %>
+<!--  No longer needed
+	 <%= render 'groupedBarChart' %> 
 
-	<!-- load stacked grouped bar chart -->
 	<%= render 'stackedGroupedBarChart' %>
 	
-	<!-- load bar chart with options -->
-	<%= render 'barChartOptions' %>
+	<%= render 'barChartOptions' %> 
+-->
+	
+	
+	<h2>DataTable Example</h2>
+	<!-- load data table -->
+	<%= render 'dataTable' %>	
 
 <% else %>	
 <% end %>
