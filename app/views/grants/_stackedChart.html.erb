@@ -56,13 +56,23 @@ var stackedChart = Highcharts.chart('stacked', {
 	while index < @uLocations.length - 1%>
 		{
 			name: '<%= raw @uLocations[index] %>',
-			data: <%= raw @amountPerYearByLocation[index] %>
+			data: <%= raw @amountPerYearByLocation[index] %>,
+			visible: <% if @uLocations[index] == "Statewide" %>
+				<%= false %>
+				<% else %>
+				<%= true %>
+				<% end %>
 	    },
 		<% index = index + 1 %>
 	<% end %>
 	{
         name: '<%= raw @uLocations[index] %>',
-        data: <%= raw @amountPerYearByLocation[index] %>
+        data: <%= raw @amountPerYearByLocation[index] %>,
+			visible: <% if @uLocations[index] == "Statewide" %>
+				<%= false %>
+				<% else %>
+				<%= true %>
+				<% end %>
     }
 	]
 });
@@ -79,13 +89,23 @@ stackedChart.update({
 	while index < @uLocations.length - 1%>
 		{
 			name: '<%= raw @uLocations[index] %>',
-			data: <%= raw @amountPerYearByLocation[index] %>
+			data: <%= raw @amountPerYearByLocation[index] %>,
+			visible: <% if @uLocations[index] == "Statewide" %>
+				<%= false %>
+				<% else %>
+				<%= true %>
+				<% end %>
 	    },
 		<% index = index + 1 %>
 	<% end %>
 	{
         name: '<%= raw @uLocations[index] %>',
-        data: <%= raw @amountPerYearByLocation[index] %>
+        data: <%= raw @amountPerYearByLocation[index] %>,
+			visible: <% if @uLocations[index] == "Statewide" %>
+				<%= false %>
+				<% else %>
+				<%= true %>
+				<% end %>
     }
 	];
 	
