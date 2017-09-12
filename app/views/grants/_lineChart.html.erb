@@ -1,17 +1,17 @@
 <div id="line-chart" style="min-width: 310px; margin: 0 auto"></div>
-<button id="by-location">By Strategic Priority</button>
-<button id="by-priority">By Strategic Results</button>
+<button id="line-results">By Strategic Results</button>
+<button id="line-priority">By Strategic Priority</button>
 
 <script>
-Highcharts.chart('line-chart', {
+var lineChart = Highcharts.chart('line-chart', {
     chart: {
         type: 'area'
     },
     title: {
-        text: 'Historic Grant Spending by Region'
+        text: 'Historic Grant Spending by Strategic Priority'
     },
     xAxis: {
-        categories: [2013, 2014, 2015, 2016],
+        categories: <%= raw @uYears %>,
         tickmarkPlacement: 'on',
         title: {
             enabled: false
@@ -19,7 +19,7 @@ Highcharts.chart('line-chart', {
     },
     yAxis: {
         title: {
-            text: 'Billions'
+            text: 'Funding'
         },
         labels: {
             formatter: function () {
@@ -28,8 +28,7 @@ Highcharts.chart('line-chart', {
         }
     },
     tooltip: {
-        split: true,
-        valueSuffix: ' millions'
+        split: true
     },
     plotOptions: {
         area: {
@@ -42,21 +41,87 @@ Highcharts.chart('line-chart', {
             }
         }
     },
-    series: [{
-        name: 'Asia',
-        data: [502, 635, 809, 947]
-    }, {
-        name: 'Africa',
-        data: [106, 107, 111, 133]
-    }, {
-        name: 'Europe',
-        data: [163, 203, 276, 408]
-    }, {
-        name: 'America',
-        data: [18, 31, 54, 156]
-    }, {
-        name: 'Oceania',
-        data: [2, 2, 2, 6]
-    }]
+    series: [
+	<% index = 0
+	while index < @uPriorities.length - 1%>
+		{
+			name: '<%= raw @uPriorities[index] %>',
+			data: <%= raw @amountPerYearByPriority[index] %>
+	    },
+		<% index = index + 1 %>
+	<% end %>
+	{
+        name: '<%= raw @uPriorities[index] %>',
+        data: <%= raw @amountPerYearByPriority[index] %>
+    }
+	]
 });
+
+$('#line-priority').click(function () {
+lineChart.update({
+       title: {
+        text: 'Historic Grant Spending by Strategic Priority'
+		}
+    });
+	
+	var newSeries = [
+	<% index = 0
+	while index < @uPriorities.length - 1%>
+		{
+			name: '<%= raw @uPriorities[index] %>',
+			data: <%= raw @amountPerYearByPriority[index] %>
+	    },
+		<% index = index + 1 %>
+	<% end %>
+	{
+        name: '<%= raw @uPriorities[index] %>',
+        data: <%= raw @amountPerYearByPriority[index] %>
+    }
+	]
+	
+	for (var i = lineChart.series.length-1; i>=0; i--) {
+            lineChart.series[i].remove();
+        }
+        for (var y = 0; y < newSeries.length; y++) {
+            lineChart.addSeries(newSeries[y]);
+        }
+		
+	lineChart.redraw();
+	
+});
+
+$('#line-results').click(function () {
+lineChart.update({
+       title: {
+        text: 'Historic Grant Spending by Strategic Results'
+		}
+    });
+	
+	var newSeries = [
+	<% index = 0
+	while index < @uResults.length - 1%>
+		{
+			name: '<%= raw @uResults[index] %>',
+			data: <%= raw @amountPerYearByResults[index] %>
+	    },
+		<% index = index + 1 %>
+	<% end %>
+	{
+        name: '<%= raw @uResults[index] %>',
+        data: <%= raw @amountPerYearByResults[index] %>
+    }
+	]
+	
+	for (var i = lineChart.series.length-1; i>=0; i--) {
+            lineChart.series[i].remove();
+        }
+        for (var y = 0; y < newSeries.length; y++) {
+            lineChart.addSeries(newSeries[y]);
+        }
+		
+	lineChart.redraw();
+	
+});
+
+
 </script>

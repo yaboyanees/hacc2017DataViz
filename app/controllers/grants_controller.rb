@@ -73,6 +73,15 @@ class GrantsController < ApplicationController
 			end
 			@amountPerYearByPriority.push(@priArray)
 	end
+	#This is a 2-d array of the preferred measurement for each strategic results, for each year.
+	@amountPerYearByResults = Array.new
+	@uResults.each do |res|
+			@resArray = Array.new
+			@uYears.each do |year|
+				@resArray.push(@grants.where(strategic_results: res).where(fiscal_year: year).sum(preferredY).to_f)
+			end
+			@amountPerYearByResults.push(@resArray)
+	end
 		
  
  	#export to all data to excel
