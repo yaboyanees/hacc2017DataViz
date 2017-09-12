@@ -1,4 +1,5 @@
 <p id="flashNotice"><%= notice %></p>
+
 <div id="dashboard-rollup">
 	<div class="card purple">
 		<p class="stat-number"><%= @grant_count %></p>
@@ -27,15 +28,19 @@
 	</div>
 </div>
 
+
 <% if @grants.present? %>
 
 	<div id="chart-area"> 
-		<h2>Charts</h2>	
 		<!-- load drill-down chart -->
 		<div id="drill-down-chart">
 			<%= render 'drillDownChart' %>
 		</div>
 		
+		<!-- load line chart -->
+		<div id="line-stack-chart">
+			<%= render 'lineChart' %>
+		</div>
 		<!-- load stacked chart -->
 		<div id="stacked-chart">
 			<%= render 'stackedChart' %>
@@ -43,7 +48,6 @@
 		
 	</div>
 	
-	<h2>Grant Table Data</h2>
 	<!-- load data table -->
 	<%= render 'dataTable' %>	
 

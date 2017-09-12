@@ -1,11 +1,11 @@
 <table id="example" class="display" cellspacing="0" width="100%">
 	<thead>
 		<tr>
-			<th></th>
+			<th>Strategic Results</th>
 			<th>Amount</th>
-			<th width = "40%">Organization</th>
+			<th>Organization</th>
 			<th>Fiscal Year</th>
-			<th>Location</th>
+			<th>Strategic</th>
 		</tr>
 	</thead>
 	<!-- <tfoot>
@@ -25,23 +25,19 @@
 	</tfoot> -->
 	
 	<tbody>
-		<% @grantData.each do |grant| %>
-		
+		<% @grantData.each do |grant| %>	
 		<tr>
 			<td></td>
 			<td><%= number_to_currency(grant.amount) %></td>
-			<td width = "40%"><%= grant.organization %></td>
+			<td><%= grant.orgLocation %></td>
 			<td><%= grant.fiscal_year %></td>
-			<td><%= grant.location %></td>
+			<td><%= grant.strategic_results %></td>
 		</tr>
-	<% end %>	
+	<% end %>
 	</tbody>
 </table>
 
 <script>
-
-
-
 /* Custom filtering function which will search data in column four between two values 
 $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
@@ -60,23 +56,6 @@ $.fn.dataTable.ext.search.push(
     }
 );  
 */
-     function format ( d ) {
-    // `d` is the original data object for the row
-	return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-        '<tr>'+
-            '<td>Full name:</td>'+
-            '<td>'+'testing expansion works'+'</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>Extension number:</td>'+
-            '<td>'+'testing expansion works'+'</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>Extra info:</td>'+
-            '<td>And any further details here (images etc)...</td>'+
-        '</tr>'+
-    '</table>';
-}
             
 $(document).ready(function() {
     var table = $('#example').DataTable({
@@ -92,7 +71,7 @@ $(document).ready(function() {
             }
 		],
         "order": [[ 4, 'asc' ]],
-        "displayLength": 1000,
+        "paging": false,
         "lengthChange": false,
         "drawCallback": function ( settings ) {
             var api = this.api();
@@ -107,7 +86,7 @@ $(document).ready(function() {
                 if ( last !== group ) {
   
                     $(rows).eq( i ).before(
-                        '<tr class="group" id="'+i+'"><td colspan="4">'+group+'</td></tr>'
+                        '<tr class="group" id="'+i+'"><td colspan="5">'+group+'</td></tr>'
                     );
                     groupadmin.push(i);
                     last = group;
@@ -143,3 +122,4 @@ $(document).ready(function() {
 } );
 
 </script>
+

@@ -1,0 +1,62 @@
+<div id="line-chart" style="min-width: 310px; margin: 0 auto"></div>
+<button id="by-location">By Strategic Priority</button>
+<button id="by-priority">By Strategic Results</button>
+
+<script>
+Highcharts.chart('line-chart', {
+    chart: {
+        type: 'area'
+    },
+    title: {
+        text: 'Historic Grant Spending by Region'
+    },
+    xAxis: {
+        categories: [2013, 2014, 2015, 2016],
+        tickmarkPlacement: 'on',
+        title: {
+            enabled: false
+        }
+    },
+    yAxis: {
+        title: {
+            text: 'Billions'
+        },
+        labels: {
+            formatter: function () {
+                return this.value / 1000;
+            }
+        }
+    },
+    tooltip: {
+        split: true,
+        valueSuffix: ' millions'
+    },
+    plotOptions: {
+        area: {
+            stacking: 'normal',
+            lineColor: '#666666',
+            lineWidth: 1,
+            marker: {
+                lineWidth: 1,
+                lineColor: '#666666'
+            }
+        }
+    },
+    series: [{
+        name: 'Asia',
+        data: [502, 635, 809, 947]
+    }, {
+        name: 'Africa',
+        data: [106, 107, 111, 133]
+    }, {
+        name: 'Europe',
+        data: [163, 203, 276, 408]
+    }, {
+        name: 'America',
+        data: [18, 31, 54, 156]
+    }, {
+        name: 'Oceania',
+        data: [2, 2, 2, 6]
+    }]
+});
+</script>

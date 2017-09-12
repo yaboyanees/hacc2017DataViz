@@ -1,6 +1,6 @@
-<div id="drill-down" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+<div id="drill-down" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 <button id="by-location">By Location</button>
-<button id="by-priority">By Strategic Priority</button><br/>
+<button id="by-priority">By Strategic Priority</button>
 
 <script>
 
@@ -14,13 +14,13 @@ drillDownChart = Highcharts.chart('drill-down', {
         text: 'Grant funding by Strategic Priority'
     },
     subtitle: {
-        text: 'Click the slices to drill down. Source: netmarketshare.com.'
+        text: 'Click slices to drill down.'
     },
     plotOptions: {
         series: {
             dataLabels: {
                 enabled: true,
-                format: '{point.name}: {point.y:.1f}'
+                format: '{point.name}<br/> {point.y:.1f}'
             }
         }
     },
@@ -93,13 +93,13 @@ $('#by-priority').click(function (e) {
         text: 'Grant funding by Strategic Priority'
     },
     subtitle: {
-        text: 'Click the slices to drill down. Source: netmarketshare.com.'
+        text: 'Click slices to drill down.'
     },
     plotOptions: {
         series: {
             dataLabels: {
                 enabled: true,
-                format: '{point.name}: {point.y:.1f}'
+                format: '{point.name}<br/> {point.y:.1f}'
             }
         }
     },
@@ -176,13 +176,13 @@ var drillDownChart2 = new Highcharts.chart('drill-down', {
         text: 'Grant funding by Location'
     },
     subtitle: {
-        text: 'Click the slices to drill down. Source: netmarketshare.com.'
+        text: 'Click slices to drill down.'
     },
     plotOptions: {
         series: {
             dataLabels: {
                 enabled: true,
-                format: '{point.name}: {point.y:.1f}'
+                format: '{point.name}<br/> {point.y:.1f}'
             }
         }
     },

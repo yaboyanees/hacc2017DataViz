@@ -1,20 +1,21 @@
 // Place all the styles related to the grants controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
 #dashboard-rollup{
 	width: 100%;
 	.card{
-		height: 146px;
-		width: 244px;
-		margin: 0 15px 15px 0;
+		height: 160px;
+		width: 220px;
+		margin: 0 10px 10px 0;
 		float:left;
 		padding: 0 0 0 10px;
 		color: #fff;
+		background-position:90% 50%;
 	}
 	.purple{
 		background-color:purple;
-		background-image: image-url("purpleCard.jpg")
-		
+		background-image: image-url("purpleCard.jpg");
 	}
 	.red{
 		background-color:red;
@@ -32,7 +33,7 @@
 		background-color:green;
 		background-image: image-url("greenCard.jpg")
 	}
-
+	
 	p.stat-number {
 		font-size: 2em;
 		line-height: 1;
@@ -43,35 +44,24 @@
 }
 
 
-
-#chart-area{
-	clear:both;
-}
-
-#drill-down-chart, #stacked-chart{
-	padding-bottom: 10px;
-	
-		background: #fff;
-		border-radius: 2px;
-		display: inline-block;
-		margin: 1rem;
-		position: relative;
-		box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-		height: 450px;
-		padding: 20px;
-
+#drill-down-chart, #stacked-chart, #line-stack-chart{
+	background: #fff;
+	border-radius: 2px;
+	display: inline;
+	float:left;
+	/*box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);*/
+	box-shadow: 0 2px 8px 0 rgba(0,0,0,.16), 0 0px 0px 0 rgba(0,0,0,.12);
+	padding: 10px 0;
+	margin: 10px 1% 10px 0;
 }
 
 div#drill-down-chart {
-    width: 30%;
+    width: 50%;
+}
+div#line-stack-chart {
+    width: 48%;
 }
 
 div#stacked-chart {
-    width: 55%;
+    width: 100%;
 }
-
-body {
-	/*background: #e2e1e0;
-	text-align: center;*/
-  }
-  
