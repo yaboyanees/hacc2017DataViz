@@ -10,6 +10,37 @@ var lineChart = Highcharts.chart('line-chart', {
     title: {
         text: 'Historic Grant Spending by Strategic Priority'
     },
+
+	exporting: { buttons: { contextButton: {
+		menuItems: [{
+		textKey: 'printChart',
+		onclick: function () {
+			this.print();
+		}
+	}, {
+		separator: true
+	}, {
+		textKey: 'downloadPNG',
+		onclick: function () {
+			this.exportChart();
+		}
+	}, {
+		textKey: 'downloadJPEG',
+		onclick: function () {
+			this.exportChart({
+				type: 'image/jpeg'
+			});
+		}
+	}, {
+		textKey: 'downloadSVG',
+		onclick: function () {
+			this.exportChart({
+				type: 'image/svg+xml'
+			});
+		}
+	}]
+}}},
+    
     xAxis: {
         categories: <%= raw @uYears %>,
         tickmarkPlacement: 'on',
@@ -23,12 +54,18 @@ var lineChart = Highcharts.chart('line-chart', {
         },
         labels: {
             formatter: function () {
-                return this.value / 1000;
+                if(this.value == 0){ 
+				return '$' + this.value / 1000000;
+				}
+				else {
+				return '$' + this.value / 1000000 + ' million';
+				}
             }
         }
     },
-    tooltip: {
-        split: true
+      tooltip: {
+	  split: true,
+        pointFormat: '{series.name}: <b>${point.y:,.0f}<br/>'
     },
     plotOptions: {
         area: {
@@ -38,6 +75,11 @@ var lineChart = Highcharts.chart('line-chart', {
             marker: {
                 lineWidth: 1,
                 lineColor: '#666666'
+            }
+        },
+		series: {
+            dataLabels: {
+                enabled: false
             }
         }
     },

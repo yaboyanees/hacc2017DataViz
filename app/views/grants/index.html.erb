@@ -1,5 +1,11 @@
 <p id="flashNotice"><%= notice %></p>
-
+<script>
+    Highcharts.setOptions({
+		lang: {
+			thousandsSep: ','
+		}
+	});
+</script>
 <div id="dashboard-rollup">
 	<div class="card purple">
 		<p class="stat-number"><%= @grant_count %></p>
