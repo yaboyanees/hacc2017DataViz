@@ -7,6 +7,11 @@
 	});
 </script>
 <div id="dashboard-rollup">
+	<div class="card green">
+		<p class="stat-number">$<%= number_to_human(@award_amount, precision:3) %></p>
+		<p class="stat-title">Total Awarded</p>
+		<p class="more-info">More Info</p>
+	</div>
 	<div class="card purple">
 		<p class="stat-number"><%= @grant_count %></p>
 		<p class="stat-title">Total Projects</p>
@@ -17,19 +22,14 @@
 		<p class="stat-title">Grants In Progress</p>
 		<p class="more-info">More Info</p>
 	</div>
-	<div class="card blue">
-		<p class="stat-number"><%= @uPriorities.count %></p>
-		<p class="stat-title">Strategic Priorities</p>
-		<p class="more-info">More Info</p>
-	</div>
 	<div class="card orange">
 		<p class="stat-number"><%= number_with_delimiter(@served[0].first) %> / <%=  number_with_delimiter(@served[0].second) %></p>
 		<p class="stat-title">Native Hawaiins / Total Served</p>
 		<p class="more-info">More Info</p>
 	</div>
-	<div class="card green">
-		<p class="stat-number">$<%= number_to_human(@award_amount, precision:3) %></p>
-		<p class="stat-title">Total Awarded</p>
+	<div class="card blue">
+		<p class="stat-number"><%= @uPriorities.count %></p>
+		<p class="stat-title">Strategic Priorities</p>
 		<p class="more-info">More Info</p>
 	</div>
 </div>
