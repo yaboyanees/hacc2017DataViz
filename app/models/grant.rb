@@ -33,6 +33,10 @@ validates :fiscal_year, :grant_type, :organization, :project, :amount, :location
 		return a
 	end
 	
+	def orgLocation
+		a = organization + ' (' + location + ')'
+	end
+	
 	#import csv file data
 	#require 'csv'
 	def self.import(file)

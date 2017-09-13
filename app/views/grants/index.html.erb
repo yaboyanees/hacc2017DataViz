@@ -1,5 +1,11 @@
 <p id="flashNotice"><%= notice %></p>
+
 <div id="dashboard-rollup">
+	<div class="card green">
+		<p class="stat-number">$<%= number_to_human(@award_amount, precision:3) %></p>
+		<p class="stat-title">Total Awarded</p>
+		<p class="more-info">More Info</p>
+	</div>
 	<div class="card purple">
 		<p class="stat-number"><%= @grant_count %></p>
 		<p class="stat-title">Total Projects</p>
@@ -10,32 +16,31 @@
 		<p class="stat-title">Grants In Progress</p>
 		<p class="more-info">More Info</p>
 	</div>
-	<div class="card blue">
-		<p class="stat-number"><%= @uPriorities.count %></p>
-		<p class="stat-title">Strategic Priorities</p>
-		<p class="more-info">More Info</p>
-	</div>
 	<div class="card orange">
 		<p class="stat-number"><%= number_with_delimiter(@served[0].first) %> / <%=  number_with_delimiter(@served[0].second) %></p>
 		<p class="stat-title">Native Hawaiins / Total Served</p>
 		<p class="more-info">More Info</p>
 	</div>
-	<div class="card green">
-		<p class="stat-number">$<%= number_to_human(@award_amount, precision:3) %></p>
-		<p class="stat-title">Total Awarded</p>
+	<div class="card blue">
+		<p class="stat-number"><%= @uPriorities.count %></p>
+		<p class="stat-title">Strategic Priorities</p>
 		<p class="more-info">More Info</p>
 	</div>
 </div>
 
+
 <% if @grants.present? %>
 
 	<div id="chart-area"> 
-		<h2>Charts</h2>	
 		<!-- load drill-down chart -->
 		<div id="drill-down-chart">
 			<%= render 'drillDownChart' %>
 		</div>
 		
+		<!-- load line chart -->
+		<div id="line-stack-chart">
+			<%= render 'lineChart' %>
+		</div>
 		<!-- load stacked chart -->
 		<div id="stacked-chart">
 			<%= render 'stackedChart' %>
@@ -43,7 +48,6 @@
 		
 	</div>
 	
-	<h2>Grant Table Data</h2>
 	<!-- load data table -->
 	<%= render 'dataTable' %>	
 

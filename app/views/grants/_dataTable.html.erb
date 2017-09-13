@@ -1,11 +1,11 @@
 <table id="example" class="display" cellspacing="0" width="100%">
 	<thead>
 		<tr>
-			<th>Location</th>
+			<th>Strategic Results</th>
 			<th>Amount</th>
-			<th width = "40%">Organization</th>
+			<th>Organization</th>
 			<th>Fiscal Year</th>
-			<th>Location</th>
+			<th>Strategic</th>
 		</tr>
 	</thead>
 	<!-- <tfoot>
@@ -25,17 +25,15 @@
 	</tfoot> -->
 	
 	<tbody>
-		<% @grantData.each do |grant| %>
-		
+		<% @grantData.each do |grant| %>	
 		<tr>
 			<td></td>
 			<td><%= number_to_currency(grant.amount) %></td>
-			<td width = "40%"><%= grant.organization %></td>
+			<td><%= grant.orgLocation %></td>
 			<td><%= grant.fiscal_year %></td>
-			<td><%= grant.location %></td>
+			<td><%= grant.strategic_results %></td>
 		</tr>
-		
-	<% end %>	
+	<% end %>
 	</tbody>
 </table>
 
@@ -58,14 +56,22 @@ $.fn.dataTable.ext.search.push(
     }
 );  
 */
-                 
+            
 $(document).ready(function() {
     var table = $('#example').DataTable({
         "columnDefs": [
             { "visible": false, "targets": 4 }
         ],
+		"columns":[
+		 {
+                "className":      'details-control',
+                "orderable":      false,
+                "data":           null,
+                "defaultContent": ''
+            }
+		],
         "order": [[ 4, 'asc' ]],
-        "displayLength": 1000,
+        "paging": false,
         "lengthChange": false,
         "drawCallback": function ( settings ) {
             var api = this.api();
@@ -80,7 +86,7 @@ $(document).ready(function() {
                 if ( last !== group ) {
   
                     $(rows).eq( i ).before(
-                        '<tr class="group" id="'+i+'"><td colspan="4">'+group+'</td></tr>'
+                        '<tr class="group" id="'+i+'"><td colspan="5">'+group+'</td></tr>'
                     );
                     groupadmin.push(i);
                     last = group;
@@ -98,7 +104,22 @@ $(document).ready(function() {
             }
         }
     } );  
-
+ $('#example tbody').on('click', 'td.details-control', function () {
+        var tr = $(this).closest('tr');
+        var row = table.row( tr );
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
+        }
+    } );
+	
 } );
 
 </script>
+
