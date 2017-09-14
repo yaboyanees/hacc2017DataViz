@@ -41,6 +41,7 @@ class GrantsController < ApplicationController
 	@uYears = @grants.distinct.order(:fiscal_year).pluck(:fiscal_year)
 	@uPriorities = @grants.distinct.pluck(:strategic_priority)
 	@uResults = @grants.distinct.pluck(:strategic_results)
+	@uType = @grants.distinct.pluck(:grant_type)
 	
 	#Total funding, grouped by location
 	@sumLocations = @grants.group("location").pluck("sum(amount)")
@@ -50,6 +51,9 @@ class GrantsController < ApplicationController
 	
 	#total funding, grouped by strategic results
 	@sumResults = @grants.group("strategic_results").pluck("sum(amount)")
+	
+	#By grant type.
+	@sumType = @grants.group("grant_type").pluck("sum(amount)")
 	
 	#This is a 2-d array of the preferred measurement for each island, for each year.
 	#Inner array is each year. Outer array is location.
@@ -73,6 +77,7 @@ class GrantsController < ApplicationController
 			end
 			@amountPerYearByPriority.push(@priArray)
 	end
+	
 	#This is a 2-d array of the preferred measurement for each strategic results, for each year.
 	@amountPerYearByResults = Array.new
 	@uResults.each do |res|
@@ -83,6 +88,15 @@ class GrantsController < ApplicationController
 			@amountPerYearByResults.push(@resArray)
 	end
 		
+	#Grant Type by year, funding
+	@amountPerYearByType = Array.new
+	@uType.each do |typ|
+			@typArray = Array.new
+			@uYears.each do |year|
+				@typArray.push(@grants.where(grant_type: typ).where(fiscal_year: year).sum(preferredY).to_f)
+			end
+			@amountPerYearByType.push(@typArray)
+	end
  
  	#export to all data to excel
 	respond_to do |f|

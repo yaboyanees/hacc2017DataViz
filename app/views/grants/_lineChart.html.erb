@@ -1,6 +1,7 @@
 <div id="line-chart" style="min-width: 310px; margin: 0 auto"></div>
 <button id="line-results">By Strategic Results</button>
 <button id="line-priority">By Strategic Priority</button>
+<button id="line-type">By Grant Type</button>
 
 <script>
 var lineChart = Highcharts.chart('line-chart', {
@@ -165,5 +166,36 @@ lineChart.update({
 	
 });
 
-
+$('#line-type').click(function () {
+lineChart.update({
+       title: {
+        text: 'Historic Grant Spending by Grant Type'
+		}
+    });
+	
+	var newSeries = [
+	<% index = 0
+	while index < @uType.length - 1%>
+		{
+			name: '<%= raw @uType[index] %>',
+			data: <%= raw @amountPerYearByType[index] %>
+	    },
+		<% index = index + 1 %>
+	<% end %>
+	{
+        name: '<%= raw @uType[index] %>',
+        data: <%= raw @amountPerYearByType[index] %>
+    }
+	]
+	
+	for (var i = lineChart.series.length-1; i>=0; i--) {
+            lineChart.series[i].remove();
+        }
+        for (var y = 0; y < newSeries.length; y++) {
+            lineChart.addSeries(newSeries[y]);
+        }
+		
+	lineChart.redraw();
+	
+});
 </script>
