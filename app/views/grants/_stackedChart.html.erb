@@ -12,7 +12,7 @@ var stackedChart = Highcharts.chart('stacked', {
         type: 'column'
     },
     title: {
-        text: 'Grant Money Awarded Per Year, by Strategic Result'
+        text: 'Grant Money Awarded Per Year, by Strategic Priority'
     },
     xAxis: {
         categories:  <%= raw @uYears %> 
@@ -87,16 +87,16 @@ var stackedChart = Highcharts.chart('stacked', {
     },
     series: [
 	<% index = 0
-	while index < @uResults.length - 1%>
+	while index < @uPriorities.length - 1%>
 		{
-			name: '<%= raw @uResults[index] %>',
-			data: <%= raw @amountPerYearByResults[index] %>
+			name: '<%= raw @uPriorities[index] %>',
+			data: <%= raw @amountPerYearByPriority[index] %>
 	    },
 		<% index = index + 1 %>
 	<% end %>
 	{
-        name: '<%= raw @uResults[index] %>',
-        data: <%= raw @amountPerYearByResults[index] %>
+        name: '<%= raw @uPriorities[index] %>',
+        data: <%= raw @amountPerYearByPriority[index] %>
     }
 	]
 });

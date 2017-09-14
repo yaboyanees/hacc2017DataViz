@@ -11,7 +11,7 @@ var lineChart = Highcharts.chart('line-chart', {
         type: 'area'
     },
     title: {
-        text: 'Historic Grant Spending by Strategic Priority'
+        text: 'Historic Grant Spending by Grant Type'
     },
 
 	exporting: { buttons: { contextButton: {
@@ -88,17 +88,17 @@ var lineChart = Highcharts.chart('line-chart', {
     },
     series: [
 	<% index = 0
-	while index < @uPriorities.length - 1%>
+	while index < @uType.length - 1%>
 		{
-			name: '<%= raw @uPriorities[index] %>',
-			data: <%= raw @amountPerYearByPriority[index] %>
-	    },
+			name: '<%= raw @uType[index] %>',
+			data: <%= raw @amountPerYearByType[index] %>
+		},
 		<% index = index + 1 %>
 	<% end %>
 	{
-        name: '<%= raw @uPriorities[index] %>',
-        data: <%= raw @amountPerYearByPriority[index] %>
-    }
+		name: '<%= raw @uType[index] %>',
+		data: <%= raw @amountPerYearByType[index] %>
+	}
 	]
 });
 

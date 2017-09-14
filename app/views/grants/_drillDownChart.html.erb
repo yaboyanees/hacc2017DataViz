@@ -9,12 +9,12 @@
 
 var priority = true;
 // Create the chart
-drillDownChart = Highcharts.chart('drill-down', {
+drillDownChart = new Highcharts.chart('drill-down', {
     chart: {
         type: 'pie'
     },
     title: {
-        text: 'Grant funding by Strategic Priority'
+        text: 'Grant funding by Location'
     },
     subtitle: {
         text: 'Click slices to drill down.'
@@ -56,63 +56,63 @@ drillDownChart = Highcharts.chart('drill-down', {
 		}
 	}]
 }}},
-
     tooltip: {
         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
         pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>${point.y:,.0f}<br/>'
     },
     series: [{
-        name: 'Strategic Priorities',
+        name: 'Locations',
         colorByPoint: true,
         data: [
 		<% index = 0
-	while index < @uPriorities.length - 1 %>
+	while index < @uLocations.length - 1 %>
 		{
-			name: '<%= raw @uPriorities[index] %>',
-			y: <%= raw @sumPriorities[index] %>,
-			drilldown: '<%= raw @uPriorities[index] %>'
+			name: '<%= raw @uLocations[index] %>',
+			y: <%= raw @sumLocations[index] %>,
+			drilldown: '<%= raw @uLocations[index] %>'
 	    },
 		<% index = index + 1 %>
 	<% end %>
 	{
-        name: '<%= raw @uPriorities[index] %>',
-        y: <%= raw @sumPriorities[index] %>,
-		drilldown: '<%= raw @uPriorities[index] %>'
+        name: '<%= raw @uLocations[index] %>',
+        y: <%= raw @sumLocations[index] %>,
+		drilldown: '<%= raw @uLocations[index] %>'
     }
 		]
     }],
     drilldown: {
         series: [
 		<% index = 0
-	while index < @uPriorities.length - 1%>
+	while index < @uLocations.length - 1%>
 		{
-			name: '<%= raw @uPriorities[index] %>',
-			id: '<%= raw @uPriorities[index] %>',
+			name: '<%= raw @uLocations[index] %>',
+			id: '<%= raw @uLocations[index] %>',
 			data: [
 				<% innerIndex = 0
-				while innerIndex < @amountPerYearByPriority[index].length - 1 %>
-					['<%= raw @uYears[innerIndex] %>', <%= raw @amountPerYearByPriority[index][innerIndex] %>],
+				while innerIndex < @amountPerYearByLocation[index].length - 1 %>
+					['<%= raw @uYears[innerIndex] %>', <%= raw @amountPerYearByLocation[index][innerIndex] %>],
 					<% innerIndex = innerIndex + 1 %>
 				<% end %>
-				['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByPriority[index][innerIndex] %>]
+				['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByLocation[index][innerIndex] %>]
 			]
 	    },
 		<% index = index + 1 %>
 	<% end %>
 		{
-			name: '<%= raw @uPriorities[index] %>',
-			id: '<%= raw @uPriorities[index] %>',
+			name: '<%= raw @uLocations[index] %>',
+			id: '<%= raw @uLocations[index] %>',
 			data: [
 				<% innerIndex = 0
-				while innerIndex < @amountPerYearByPriority[index].length - 1 %>
-					['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByPriority[index][innerIndex] %>],
+				while innerIndex < @amountPerYearByLocation[index].length - 1 %>
+					['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByLocation[index][innerIndex] %>],
 					<% innerIndex = innerIndex + 1 %>
 				<% end %>
-				['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByPriority[index][innerIndex] %>]
+				['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByLocation[index][innerIndex] %>]
 			]
 	    }
 		]
     }
+	
 });
 
 $('#by-priority').click(function (e) {
