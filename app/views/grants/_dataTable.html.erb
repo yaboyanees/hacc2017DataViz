@@ -1,66 +1,43 @@
-<table id="example" class="display" cellspacing="0" width="100%">
+<table id="example" class="display" cellspacing="0">
 	<thead>
 		<tr>
-			<th>Strategic Results</th>
-			<th>Amount</th>
-			<th>Organization</th>
-			<th>Fiscal Year</th>
-			<th>Strategic</th>
+			<th width="20%">Strategic Priority</th>
+			<th width="25%">Amount: Organization</th>
+			<th width="10%">Fiscal Year</th>
+			<th width="25%">Strategic Results</th>
+			<th width="20%">Grant Type</th>
 		</tr>
 	</thead>
-	<!-- <tfoot>
+	<tfoot>
 		<tr>
-			<th>Fiscal Year</th>
-			<th>Type</th>
-			<th>Organization</th>
-			<th width = "40%">Project</th>
-			<th>Amount</th>
-			<th>Location</th>
-			<th>Strategic Priority</th>
-			<th>Strategic Results</th>
-			<th>Total Served</th>
-			<th>Native Hawaiians Served</th>
-			<th>Status</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
 		</tr>
-	</tfoot> -->
+	</tfoot>
 	
 	<tbody>
 		<% @grantData.each do |grant| %>	
 		<tr>
-			<td></td>
-			<td><%= number_to_currency(grant.amount) %></td>
-			<td><%= grant.orgLocation %></td>
-			<td><%= grant.fiscal_year %></td>
-			<td><%= grant.strategic_results %></td>
+			<td width="20%"></td>
+			<td width="25%"><%= number_to_currency(grant.amount) %>: <%= grant.orgLocation %></td>
+			<td width="10%"><%= grant.fiscal_year %></td>
+			<td><%= grant.strategic_priority %></td>
+			<td width="20%"><%= grant.grant_type %></td>
+			<td width="25%"><%= grant.strategic_results %></td>
 		</tr>
 	<% end %>
 	</tbody>
 </table>
 
 <script>
-/* Custom filtering function which will search data in column four between two values 
-$.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min = parseInt( $('#min').val(), 10 );
-        var max = parseInt( $('#max').val(), 10 );
-        var amount = parseFloat( data[4] ) || 0; // use data for the amount column
- 
-        if ( ( isNaN( min ) && isNaN( max ) ) ||
-             ( isNaN( min ) && amount <= max ) ||
-             ( min <= amount   && isNaN( max ) ) ||
-             ( min <= amount   && amount <= max ) )
-        {
-            return true;
-        }
-        return false;
-    }
-);  
-*/
-            
+     
 $(document).ready(function() {
     var table = $('#example').DataTable({
         "columnDefs": [
-            { "visible": false, "targets": 4 }
+            { "visible": false, "targets": 5 }
         ],
 		"columns":[
 		 {
@@ -70,7 +47,7 @@ $(document).ready(function() {
                 "defaultContent": ''
             }
 		],
-        "order": [[ 4, 'asc' ]],
+        "order": [[ 5, 'asc' ]],
         "paging": false,
         "lengthChange": false,
         "drawCallback": function ( settings ) {
@@ -81,12 +58,12 @@ $(document).ready(function() {
  
             var groupadmin = []; 
  
-            api.column(4, {page:'current'} ).data().each( function ( group, i ) {
+            api.column(5, {page:'current'} ).data().each( function ( group, i ) {
 
                 if ( last !== group ) {
   
                     $(rows).eq( i ).before(
-                        '<tr class="group" id="'+i+'"><td colspan="5">'+group+'</td></tr>'
+                        '<tr class="group" id="'+i+'"><td colspan="6">'+group+'</td></tr>'
                     );
                     groupadmin.push(i);
                     last = group;
@@ -102,6 +79,24 @@ $(document).ready(function() {
                   });
                  
             }
+            this.api().columns([2,3,4]).every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.footer()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );   
         }
     } );  
  $('#example tbody').on('click', 'td.details-control', function () {
