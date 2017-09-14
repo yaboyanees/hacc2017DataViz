@@ -1,8 +1,9 @@
 <div id="line-chart" style="min-width: 310px; margin: 0 auto"></div>
-<button id="line-results">By Strategic Results</button>
-<button id="line-priority">By Strategic Priority</button>
-<button id="line-type">By Grant Type</button>
-
+<div style="background:black; text-align:center">
+<button id="line-results" class="mui-btn mui-btn--raised mui-btn--primary mui-btn--small">By Strategic Results</button>
+<button id="line-priority" class="mui-btn mui-btn--raised mui-btn--primary mui-btn--small">By Strategic Priority</button>
+<button id="line-type" class="mui-btn mui-btn--raised mui-btn--primary mui-btn--small">By Grant Type</button>
+</div>
 <script>
 var lineChart = Highcharts.chart('line-chart', {
     chart: {
