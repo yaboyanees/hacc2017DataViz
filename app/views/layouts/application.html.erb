@@ -12,8 +12,6 @@
 		<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 		<script src="https://code.highcharts.com/modules/exporting.js"></script>
 		<script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
-		<link href="//cdn.muicss.com/mui-0.9.25/css/mui.min.css" rel="stylesheet" type="text/css" />
-		<script src="//cdn.muicss.com/mui-0.9.25/js/mui.min.js"></script>
 	</head>
 	
 	<body>
@@ -49,4 +47,13 @@
 $('.expand-option').click(function(){
     $('.mass-upload').slideToggle('slow');
 });
+
+Highcharts.setOptions({
+	lang: {
+		thousandsSep: ','
+	}
+});
+
+$("#flashNotice").fadeOut(3000);
+
 </script>

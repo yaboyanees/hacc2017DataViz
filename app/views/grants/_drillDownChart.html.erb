@@ -1,9 +1,10 @@
 <div id="drill-down" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-<div style="text-align:center">
-	<button id="by-location" class="mui-btn mui-btn--raised mui-btn--primary mui-btn--small">By Location</button>
-	<button id="by-priority" class="mui-btn mui-btn--raised mui-btn--primary mui-btn--small">By Strategic Priority</button>
-	<button id="by-results" class="mui-btn mui-btn--raised mui-btn--primary mui-btn--small">By Strategic Results</button>
+<div class="select-filters">
+	<button id="by-location" class="btn" type="button"><span>Location</span></button>
+	<button id="by-priority" class="btn not-chosen" type="button"><span>Strategic Priority</span></button>
+	<button id="by-results" class="btn not-chosen" type="button"><span>Strategic Results</span></button>
 </div>
+
 <script>
 
 var priority = true;
@@ -115,6 +116,9 @@ drillDownChart = Highcharts.chart('drill-down', {
 });
 
 $('#by-priority').click(function (e) {
+  $( this ).removeClass( "not-chosen" );
+  $("#by-location").addClass( "not-chosen" );
+  $("#by-results").addClass( "not-chosen" );
 	drillDownChart.destroy();
     drillDownChart2 = new Highcharts.chart('drill-down', {
     chart: {
@@ -228,6 +232,9 @@ $('#by-priority').click(function (e) {
 
 
 $('#by-location').click(function (e) {
+  $( this ).removeClass( "not-chosen" );
+  $("#by-priority").addClass( "not-chosen" );
+  $("#by-results").addClass( "not-chosen" );
 	drillDownChart.destroy();
 var drillDownChart2 = new Highcharts.chart('drill-down', {
     chart: {
@@ -339,6 +346,9 @@ var drillDownChart2 = new Highcharts.chart('drill-down', {
 
 
 $('#by-results').click(function (e) {
+  $( this ).removeClass( "not-chosen" );
+  $("#by-priority").addClass( "not-chosen" );
+  $("#by-location").addClass( "not-chosen" );
 	drillDownChart.destroy();
 var drillDownChart2 = new Highcharts.chart('drill-down', {
     chart: {

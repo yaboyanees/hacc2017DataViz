@@ -1,11 +1,5 @@
 <p id="flashNotice"><%= notice %></p>
-<script>
-    Highcharts.setOptions({
-		lang: {
-			thousandsSep: ','
-		}
-	});
-</script>
+
 <div id="dashboard-rollup">
 	<div class="card green">
 		<p class="stat-number">$<%= number_to_human(@award_amount, precision:3) %></p>
@@ -59,10 +53,6 @@
 
 <% else %>	
 <% end %>
-
-<script>
-	$("#flashNotice").fadeOut(3000);
-</script>
 
 <!-- uncomment this to run console on the page-->
 <%#= console %>

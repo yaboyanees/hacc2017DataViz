@@ -1,11 +1,10 @@
 <table id="example" class="display" cellspacing="0">
 	<thead>
 		<tr>
-			<th width="20%">Strategic Priority</th>
-			<th width="25%">Amount: Organization</th>
-			<th width="10%">Fiscal Year</th>
-			<th width="25%">Strategic Results</th>
+			<th width="30%">Strategic Priority: Result</th>
+			<th width="40%">Organization: Amount</th>
 			<th width="20%">Grant Type</th>
+			<th width="10%">Fiscal Year</th>
 		</tr>
 	</thead>
 	<tfoot>
@@ -21,12 +20,11 @@
 	<tbody>
 		<% @grantData.each do |grant| %>	
 		<tr>
-			<td width="20%"></td>
-			<td width="25%"><%= number_to_currency(grant.amount) %>: <%= grant.orgLocation %></td>
-			<td width="10%"><%= grant.fiscal_year %></td>
-			<td><%= grant.strategic_priority %></td>
+			<td width="30%"></td>
+			<td width="40%"><%= grant.orgLocation %>: <%= number_to_currency(grant.amount) %></td>
 			<td width="20%"><%= grant.grant_type %></td>
-			<td width="25%"><%= grant.strategic_results %></td>
+			<td width="10%"><%= grant.fiscal_year %></td>
+			<td><%= grant.concatStrategic %></td>
 		</tr>
 	<% end %>
 	</tbody>
@@ -37,7 +35,7 @@
 $(document).ready(function() {
     var table = $('#example').DataTable({
         "columnDefs": [
-            { "visible": false, "targets": 5 }
+            { "visible": false, "targets": 4 }
         ],
 		"columns":[
 		 {
@@ -47,7 +45,7 @@ $(document).ready(function() {
                 "defaultContent": ''
             }
 		],
-        "order": [[ 5, 'asc' ]],
+        "order": [[ 4, 'asc' ]],
         "paging": false,
         "lengthChange": false,
         "drawCallback": function ( settings ) {
@@ -58,12 +56,12 @@ $(document).ready(function() {
  
             var groupadmin = []; 
  
-            api.column(5, {page:'current'} ).data().each( function ( group, i ) {
+            api.column(4, {page:'current'} ).data().each( function ( group, i ) {
 
                 if ( last !== group ) {
   
                     $(rows).eq( i ).before(
-                        '<tr class="group" id="'+i+'"><td colspan="6">'+group+'</td></tr>'
+                        '<tr class="group" id="'+i+'"><td colspan="5">'+group+'</td></tr>'
                     );
                     groupadmin.push(i);
                     last = group;

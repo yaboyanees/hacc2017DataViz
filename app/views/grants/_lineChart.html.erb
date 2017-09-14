@@ -1,9 +1,10 @@
 <div id="line-chart" style="min-width: 310px; margin: 0 auto"></div>
-<div style="text-align:center">
-	<button id="line-results" class="mui-btn mui-btn--raised mui-btn--primary mui-btn--small">By Strategic Results</button>
-	<button id="line-priority" class="mui-btn mui-btn--raised mui-btn--primary mui-btn--small">By Strategic Priority</button>
-	<button id="line-type" class="mui-btn mui-btn--raised mui-btn--primary mui-btn--small">By Grant Type</button>
+<div class="select-filters">
+	<button id="line-type" class="btn" type="button"><span>Grant Type</span></button>
+	<button id="line-priority" class="btn not-chosen" type="button"><span>Strategic Priority</span></button>
+	<button id="line-results" class="btn not-chosen" type="button"><span>Strategic Results</span></button>
 </div>
+
 <script>
 var lineChart = Highcharts.chart('line-chart', {
     chart: {
@@ -102,7 +103,10 @@ var lineChart = Highcharts.chart('line-chart', {
 });
 
 $('#line-priority').click(function () {
-lineChart.update({
+	$( this ).removeClass( "not-chosen" );
+	$("#line-type").addClass( "not-chosen" );
+	$("#line-results").addClass( "not-chosen" );
+	lineChart.update({
        title: {
         text: 'Historic Grant Spending by Strategic Priority'
 		}
@@ -135,7 +139,10 @@ lineChart.update({
 });
 
 $('#line-results').click(function () {
-lineChart.update({
+	$( this ).removeClass( "not-chosen" );
+	$("#line-priority").addClass( "not-chosen" );
+	$("#line-type").addClass( "not-chosen" );
+	lineChart.update({
        title: {
         text: 'Historic Grant Spending by Strategic Results'
 		}
@@ -168,11 +175,14 @@ lineChart.update({
 });
 
 $('#line-type').click(function () {
-lineChart.update({
-       title: {
-        text: 'Historic Grant Spending by Grant Type'
+	$( this ).removeClass( "not-chosen" );
+	$("#line-priority").addClass( "not-chosen" );
+	$("#line-results").addClass( "not-chosen" );
+	lineChart.update({
+	   title: {
+		text: 'Historic Grant Spending by Grant Type'
 		}
-    });
+	});
 	
 	var newSeries = [
 	<% index = 0
@@ -180,21 +190,21 @@ lineChart.update({
 		{
 			name: '<%= raw @uType[index] %>',
 			data: <%= raw @amountPerYearByType[index] %>
-	    },
+		},
 		<% index = index + 1 %>
 	<% end %>
 	{
-        name: '<%= raw @uType[index] %>',
-        data: <%= raw @amountPerYearByType[index] %>
-    }
+		name: '<%= raw @uType[index] %>',
+		data: <%= raw @amountPerYearByType[index] %>
+	}
 	]
 	
 	for (var i = lineChart.series.length-1; i>=0; i--) {
-            lineChart.series[i].remove();
-        }
-        for (var y = 0; y < newSeries.length; y++) {
-            lineChart.addSeries(newSeries[y]);
-        }
+			lineChart.series[i].remove();
+		}
+		for (var y = 0; y < newSeries.length; y++) {
+			lineChart.addSeries(newSeries[y]);
+		}
 		
 	lineChart.redraw();
 	
