@@ -1,6 +1,7 @@
 <div id="drill-down" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 <button id="by-location">By Location</button>
 <button id="by-priority">By Strategic Priority</button>
+<button id="by-results">By Strategic Results</button>
 
 <script>
 
@@ -20,14 +21,43 @@ drillDownChart = Highcharts.chart('drill-down', {
         series: {
             dataLabels: {
                 enabled: true,
-                format: '{point.name}<br/> {point.y:.1f}'
+                format: '{point.name}<br/> ${point.y:,.0f}'
             }
         }
     },
+	exporting: { buttons: { contextButton: {
+		menuItems: [{
+		textKey: 'printChart',
+		onclick: function () {
+			this.print();
+		}
+	}, {
+		separator: true
+	}, {
+		textKey: 'downloadPNG',
+		onclick: function () {
+			this.exportChart();
+		}
+	}, {
+		textKey: 'downloadJPEG',
+		onclick: function () {
+			this.exportChart({
+				type: 'image/jpeg'
+			});
+		}
+	}, {
+		textKey: 'downloadSVG',
+		onclick: function () {
+			this.exportChart({
+				type: 'image/svg+xml'
+			});
+		}
+	}]
+}}},
 
     tooltip: {
         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}<br/>'
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>${point.y:,.0f}<br/>'
     },
     series: [{
         name: 'Strategic Priorities',
@@ -95,19 +125,49 @@ $('#by-priority').click(function (e) {
     subtitle: {
         text: 'Click slices to drill down.'
     },
+	exporting: { buttons: { contextButton: {
+		menuItems: [{
+		textKey: 'printChart',
+		onclick: function () {
+			this.print();
+		}
+	}, {
+		separator: true
+	}, {
+		textKey: 'downloadPNG',
+		onclick: function () {
+			this.exportChart();
+		}
+	}, {
+		textKey: 'downloadJPEG',
+		onclick: function () {
+			this.exportChart({
+				type: 'image/jpeg'
+			});
+		}
+	}, {
+		textKey: 'downloadSVG',
+		onclick: function () {
+			this.exportChart({
+				type: 'image/svg+xml'
+			});
+		}
+	}]
+}}},
+    
     plotOptions: {
         series: {
             dataLabels: {
                 enabled: true,
-                format: '{point.name}<br/> {point.y:.1f}'
+                format: '{point.name}<br/> ${point.y:,.0f}'
             }
         }
     },
 
     tooltip: {
         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}<br/>'
-    },
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>${point.y:,.0f}<br/>'
+	},
     series: [{
         name: 'Strategic Priorities',
         colorByPoint: true,
@@ -182,14 +242,42 @@ var drillDownChart2 = new Highcharts.chart('drill-down', {
         series: {
             dataLabels: {
                 enabled: true,
-                format: '{point.name}<br/> {point.y:.1f}'
+                format: '{point.name}<br/> ${point.y:,.0f}'
             }
         }
     },
-
+	exporting: { buttons: { contextButton: {
+		menuItems: [{
+		textKey: 'printChart',
+		onclick: function () {
+			this.print();
+		}
+	}, {
+		separator: true
+	}, {
+		textKey: 'downloadPNG',
+		onclick: function () {
+			this.exportChart();
+		}
+	}, {
+		textKey: 'downloadJPEG',
+		onclick: function () {
+			this.exportChart({
+				type: 'image/jpeg'
+			});
+		}
+	}, {
+		textKey: 'downloadSVG',
+		onclick: function () {
+			this.exportChart({
+				type: 'image/svg+xml'
+			});
+		}
+	}]
+}}},
     tooltip: {
         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}<br/>'
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>${point.y:,.0f}<br/>'
     },
     series: [{
         name: 'Locations',
@@ -239,6 +327,117 @@ var drillDownChart2 = new Highcharts.chart('drill-down', {
 					<% innerIndex = innerIndex + 1 %>
 				<% end %>
 				['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByLocation[index][innerIndex] %>]
+			]
+	    }
+		]
+    }
+	
+});
+	drillDownChart = drillDownChart2;
+});
+
+
+$('#by-results').click(function (e) {
+	drillDownChart.destroy();
+var drillDownChart2 = new Highcharts.chart('drill-down', {
+    chart: {
+        type: 'pie'
+    },
+    title: {
+        text: 'Grant funding by Results'
+    },
+    subtitle: {
+        text: 'Click slices to drill down.'
+    },
+    plotOptions: {
+        series: {
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}<br/> ${point.y:,.0f}'
+            }
+        }
+    },
+	exporting: { buttons: { contextButton: {
+		menuItems: [{
+		textKey: 'printChart',
+		onclick: function () {
+			this.print();
+		}
+	}, {
+		separator: true
+	}, {
+		textKey: 'downloadPNG',
+		onclick: function () {
+			this.exportChart();
+		}
+	}, {
+		textKey: 'downloadJPEG',
+		onclick: function () {
+			this.exportChart({
+				type: 'image/jpeg'
+			});
+		}
+	}, {
+		textKey: 'downloadSVG',
+		onclick: function () {
+			this.exportChart({
+				type: 'image/svg+xml'
+			});
+		}
+	}]
+}}},
+    tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>${point.y:,.0f}<br/>'
+    },
+    series: [{
+        name: 'Strategic Results',
+        colorByPoint: true,
+        data: [
+		<% index = 0
+	while index < @uResults.length - 1 %>
+		{
+			name: '<%= raw @uResults[index] %>',
+			y: <%= raw @sumResults[index] %>,
+			drilldown: '<%= raw @uResults[index] %>'
+	    },
+		<% index = index + 1 %>
+	<% end %>
+	{
+        name: '<%= raw @uResults[index] %>',
+        y: <%= raw @sumResults[index] %>,
+		drilldown: '<%= raw @uResults[index] %>'
+    }
+		]
+    }],
+    drilldown: {
+        series: [
+		<% index = 0
+	while index < @uResults.length - 1%>
+		{
+			name: '<%= raw @uResults[index] %>',
+			id: '<%= raw @uResults[index] %>',
+			data: [
+				<% innerIndex = 0
+				while innerIndex < @amountPerYearByResults[index].length - 1 %>
+					['<%= raw @uYears[innerIndex] %>', <%= raw @amountPerYearByResults[index][innerIndex] %>],
+					<% innerIndex = innerIndex + 1 %>
+				<% end %>
+				['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByResults[index][innerIndex] %>]
+			]
+	    },
+		<% index = index + 1 %>
+	<% end %>
+		{
+			name: '<%= raw @uResults[index] %>',
+			id: '<%= raw @uResults[index] %>',
+			data: [
+				<% innerIndex = 0
+				while innerIndex < @amountPerYearByResults[index].length - 1 %>
+					['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByResults[index][innerIndex] %>],
+					<% innerIndex = innerIndex + 1 %>
+				<% end %>
+				['<%= raw @uYears[innerIndex] %>', <%= @amountPerYearByResults[index][innerIndex] %>]
 			]
 	    }
 		]
