@@ -93,7 +93,9 @@ $(document).ready(function() {
             } 
         }
     } );  
-     
+ 
+
+
  $('#example tbody').on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
         var row = table.row( tr );
@@ -117,8 +119,6 @@ $(document).ready(function() {
 		var fiscal = $(this).val();
 			table.column(2).search(fiscal).draw();
 	});
-	
 } );
-
 </script>
 
