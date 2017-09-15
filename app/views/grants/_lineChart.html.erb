@@ -16,30 +16,14 @@ var lineChart = Highcharts.chart('line-chart', {
 
 	exporting: { buttons: { contextButton: {
 		menuItems: [{
-		textKey: 'printChart',
-		onclick: function () {
-			this.print();
-		}
-	}, {
-		separator: true
-	}, {
 		textKey: 'downloadPNG',
 		onclick: function () {
 			this.exportChart();
 		}
 	}, {
-		textKey: 'downloadJPEG',
+		textKey: 'downloadCSV',
 		onclick: function () {
-			this.exportChart({
-				type: 'image/jpeg'
-			});
-		}
-	}, {
-		textKey: 'downloadSVG',
-		onclick: function () {
-			this.exportChart({
-				type: 'image/svg+xml'
-			});
+			this.downloadCSV();
 		}
 	}]
 }}},
