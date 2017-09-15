@@ -4,13 +4,13 @@
 
 #dashboard-rollup{
 	width: 100%;
+	text-align:center;
 	.card{
+		text-align:left;
 		height: 140px;
-		width: 18.35%;
-		min-width: 220px;
-		max-width:300px;
+		width: 220px;
 		margin: 0 10px 10px 0;
-		float:left;
+		display:inline-grid;
 		padding: 0 0 0 10px;
 		color: #fff;
 		background-position:90% 50%;
@@ -35,9 +35,8 @@
 		background-color:green;
 		background-image: image-url("greenCard.jpg")
 	}
-	
 	p.stat-number {
-		font-size: 2em;
+		font-size: 24px;
 		line-height: 1;
 		font-weight: bold;
 		padding: 0px;
@@ -45,7 +44,7 @@
 	}
 }
 
-
+#drill-down, #line-chart, #stacked-grouped-bar-chart, #stacked{margin:0 auto;}
 #drill-down-chart, #stacked-chart, #line-stack-chart{
 	background: #fff;
 	border-radius: 2px;

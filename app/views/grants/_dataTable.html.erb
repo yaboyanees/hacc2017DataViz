@@ -1,10 +1,26 @@
-<table id="example" class="display" cellspacing="0">
+<table id="example" width="100%"class="display" cellspacing="0">
 	<thead>
 		<tr>
-			<th width="30%">Strategic Priority: Result</th>
-			<th width="40%">Organization: Amount</th>
-			<th width="20%">Grant Type</th>
-			<th width="10%">Fiscal Year</th>
+			<th class="thrity">Strategic Priority: Result</th>
+			<th class="fifty">Amount: Organization</th>
+			<th class="twenty-five">
+				<select id='grantType'>
+					<option value="">All Grant Types</option>
+					<option value="Ahahui">Ahahui</option>
+					<option value="BOT Initiative">BOT Initiative</option>
+					<option value="Community Grant">Community Grant</option>
+					<option value="Sponsorship">Sponsorship</option>
+				</select>
+			</th>
+			<th width="fifteen">
+				<select id='fy'>
+					<option value="">All Fiscal Years</option>
+					<option value="2013">2013</option>
+					<option value="2014">2014</option>
+					<option value="2015">2015</option>
+					<option value="2016">2016</option>
+				</select>
+			</th>
 		</tr>
 	</thead>
 	<tfoot>
@@ -20,18 +36,17 @@
 	<tbody>
 		<% @grantData.each do |grant| %>	
 		<tr>
-			<td width="30%"></td>
-			<td width="40%"><%= grant.orgLocation %>: <%= number_to_currency(grant.amount) %></td>
-			<td width="20%"><%= grant.grant_type %></td>
-			<td width="10%"><%= grant.fiscal_year %></td>
+			<td class="thrity"></td>
+			<td class="fifty"><span style="color: #000;"><%= number_to_currency(grant.amount) %></span>: <%= grant.orgLocation %></td>
+			<td class="twenty-five"><%= grant.grant_type %></td>
+			<td class="fifteen"><%= grant.fiscal_year %></td>
 			<td><%= grant.concatStrategic %></td>
 		</tr>
 	<% end %>
 	</tbody>
 </table>
 
-<script>
-     
+<script>     
 $(document).ready(function() {
     var table = $('#example').DataTable({
         "columnDefs": [
@@ -52,16 +67,15 @@ $(document).ready(function() {
             var api = this.api();
             var rows = api.rows( {page:'current'} ).nodes();
 
-            var last=null;
- 
+            var last=null; 
             var groupadmin = []; 
- 
+            
             api.column(4, {page:'current'} ).data().each( function ( group, i ) {
 
                 if ( last !== group ) {
   
                     $(rows).eq( i ).before(
-                        '<tr class="group" id="'+i+'"><td colspan="5">'+group+'</td></tr>'
+                        '<tr class="group" id="'+i+'"><td class="group-td" colspan="5">'+group+'</td></tr>'
                     );
                     groupadmin.push(i);
                     last = group;
@@ -76,27 +90,10 @@ $(document).ready(function() {
                 	$(".group_"+gid).slideToggle(300);
                   });
                  
-            }
-            this.api().columns([2,3,4]).every( function () {
-                var column = this;
-                var select = $('<select><option value=""></option></select>')
-                    .appendTo( $(column.footer()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
- 
-                        column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                    } );
- 
-                column.data().unique().sort().each( function ( d, j ) {
-                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                } );
-            } );   
+            } 
         }
     } );  
+     
  $('#example tbody').on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
         var row = table.row( tr );
@@ -111,6 +108,15 @@ $(document).ready(function() {
             tr.addClass('shown');
         }
     } );
+
+	$("#fy").on("change", function(e) {
+		var fiscal = $(this).val();
+			table.column(3).search(fiscal).draw();
+	});
+	$("#grantType").on("change", function(e) {
+		var fiscal = $(this).val();
+			table.column(2).search(fiscal).draw();
+	});
 	
 } );
 
