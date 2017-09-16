@@ -41,10 +41,17 @@
 		font-weight:bold;
 		padding: 15px 0 0 0;
 	}
-	p.stat-title {
-		margin-top:-25px;
+	.stat-title {
+		font-size: 16px;
+		font-weight:normal;
 	}
-	p.more-info {
+	.stat-year {
+		font-size: 20px;
+		font-weight:normal;
+	}
+	.more-info {
+		font-size: 16px;
+		font-weight:normal;
 	}
 }
 
@@ -61,11 +68,11 @@
 }
 
 div#drill-down-chart {
-    width: 50%;
+    width: 48.5%;
     clear:left;
 }
 div#line-stack-chart {
-    width: 48%;
+    width: 49.5%;
 }
 
 div#stacked-chart {

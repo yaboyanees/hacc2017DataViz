@@ -1,8 +1,30 @@
-<table id="example" width="100%"class="display" cellspacing="0">
+<div class="export-area">
+	<%= link_to grants_url(format: "xls") do %>
+		Raw Data <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#f9f9f9" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" /></svg>
+	<% end %>
+</div>	
+<table id="example" width="100%" class="display" cellspacing="0">
 	<thead>
 		<tr>
 			<th class="thrity">Strategic Priority: Result</th>
-			<th class="fifty">Amount: Organization</th>
+			<th class="fifty">Organization: Amount</th>
+			<th class="responsive-hide">
+				<select id='locationSelect'>
+					<option value="">All Locations</option>
+					<option value="Continent">Continent</option>
+					<option value="Hawaii">Hawaii</option>
+					<option value="International">International</option>
+					<option value="Kauai">Kauai</option>
+					<option value="Kauai">Kauai</option>
+					<option value="Lanai">Kauai</option>
+					<option value="Maui">Molokai</option>		
+					<option value="Mulitple">Mulitple</option>
+					<option value="Oahu">Oahu</option>
+					<option value="Papahanaumokuakea">Papahanaumokuakea</option>
+					<option value="Polynesia">Polynesia</option>
+					<option value="Statewide">Statewide</option>
+				</select>
+			</th>
 			<th class="twenty-five">
 				<select id='grantType'>
 					<option value="">All Grant Types</option>
@@ -37,7 +59,13 @@
 		<% @grantData.each do |grant| %>	
 		<tr>
 			<td class="thrity"></td>
-			<td class="fifty"><span style="color: #000;"><%= number_to_currency(grant.amount) %></span>: <%= grant.orgLocation %></td>
+			<td class="fifty">
+				<div class="tooltip">
+					<%= grant.organization %>: <%= number_to_currency(grant.amount) %>
+					<span class="tooltiptext"><%= grant.project %></span>
+				</div>
+			</td>
+			<td class="responsive-hide"><%= grant.location %></td>
 			<td class="twenty-five"><%= grant.grant_type %></td>
 			<td class="fifteen"><%= grant.fiscal_year %></td>
 			<td><%= grant.concatStrategic %></td>
@@ -50,7 +78,7 @@
 $(document).ready(function() {
     var table = $('#example').DataTable({
         "columnDefs": [
-            { "visible": false, "targets": 4 }
+            { "visible": false, "targets": 5 }
         ],
 		"columns":[
 		 {
@@ -60,7 +88,7 @@ $(document).ready(function() {
                 "defaultContent": ''
             }
 		],
-        "order": [[ 4, 'asc' ]],
+        "order": [[ 5, 'asc' ]],
         "paging": false,
         "lengthChange": false,
         "drawCallback": function ( settings ) {
@@ -70,12 +98,12 @@ $(document).ready(function() {
             var last=null; 
             var groupadmin = []; 
             
-            api.column(4, {page:'current'} ).data().each( function ( group, i ) {
+            api.column(5, {page:'current'} ).data().each( function ( group, i ) {
 
                 if ( last !== group ) {
   
                     $(rows).eq( i ).before(
-                        '<tr class="group" id="'+i+'"><td class="group-td" colspan="5">'+group+'</td></tr>'
+                        '<tr class="group" id="'+i+'"><td class="group-td" colspan="6">'+group+'</td></tr>'
                     );
                     groupadmin.push(i);
                     last = group;
@@ -93,10 +121,9 @@ $(document).ready(function() {
             } 
         }
     } );  
- 
 
 
- $('#example tbody').on('click', 'td.details-control', function () {
+	$('#example tbody').on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
         var row = table.row( tr );
         if ( row.child.isShown() ) {
@@ -113,11 +140,15 @@ $(document).ready(function() {
 
 	$("#fy").on("change", function(e) {
 		var fiscal = $(this).val();
-			table.column(3).search(fiscal).draw();
+			table.column(4).search(fiscal).draw();
 	});
 	$("#grantType").on("change", function(e) {
 		var fiscal = $(this).val();
-			table.column(2).search(fiscal).draw();
+			table.column(3).search(fiscal).draw();
+	});
+	$("#locationSelect").on("change", function(e) {
+		var localSel = $(this).val();
+			table.column(2).search(localSel).draw();
 	});
 } );
 </script>
