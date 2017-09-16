@@ -1,42 +1,9 @@
-<p id="flashNotice"><%= notice %></p>
-<script>
-    Highcharts.setOptions({
-		lang: {
-			thousandsSep: ','
-		}
-	});
-</script>
-<div id="dashboard-rollup">
-	<div class="card green">
-		<p class="stat-number">$<%= number_to_human(@award_amount, precision:3) %></p>
-		<p class="stat-title">Total Awarded</p>
-		<p class="more-info">More Info</p>
-	</div>
-	<div class="card purple">
-		<p class="stat-number"><%= @grant_count %></p>
-		<p class="stat-title">Total Projects</p>
-		<p class="more-info">More Info</p>
-	</div>
-	<div class="card red">
-		<p class="stat-number"><%= @inProgress %></p>
-		<p class="stat-title">Grants In Progress</p>
-		<p class="more-info">More Info</p>
-	</div>
-	<div class="card orange">
-		<p class="stat-number"><%= number_with_delimiter(@served[0].first) %> / <%=  number_with_delimiter(@served[0].second) %></p>
-		<p class="stat-title">Native Hawaiins / Total Served</p>
-		<p class="more-info">More Info</p>
-	</div>
-	<div class="card blue">
-		<p class="stat-number"><%= @uPriorities.count %></p>
-		<p class="stat-title">Strategic Priorities</p>
-		<p class="more-info">More Info</p>
-	</div>
-</div>
-
+<!--<p id="flashNotice"><%#= notice %></p>-->
 
 <% if @grants.present? %>
-
+	<div id="dashboard-rollup">
+		<%= render 'cardRollup' %>
+	</div>
 	<div id="chart-area"> 
 		<!-- load drill-down chart -->
 		<div id="drill-down-chart">
@@ -59,10 +26,6 @@
 
 <% else %>	
 <% end %>
-
-<script>
-	$("#flashNotice").fadeOut(3000);
-</script>
 
 <!-- uncomment this to run console on the page-->
 <%#= console %>

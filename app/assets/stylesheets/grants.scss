@@ -4,11 +4,13 @@
 
 #dashboard-rollup{
 	width: 100%;
+	text-align:center;
 	.card{
+		text-align:left;
 		height: 140px;
 		width: 220px;
 		margin: 0 10px 10px 0;
-		float:left;
+		display:inline-grid;
 		padding: 0 0 0 10px;
 		color: #fff;
 		background-position:90% 50%;
@@ -33,17 +35,27 @@
 		background-color:green;
 		background-image: image-url("greenCard.jpg")
 	}
-	
+	p{margin: 0; padding:0; line-height:1;}
 	p.stat-number {
-		font-size: 2em;
-		line-height: 1;
-		font-weight: bold;
-		padding: 0px;
-		margin: 18px 0px 0px 0px;
+		font-size: 24px;
+		font-weight:bold;
+		padding: 15px 0 0 0;
+	}
+	.stat-title {
+		font-size: 16px;
+		font-weight:normal;
+	}
+	.stat-year {
+		font-size: 20px;
+		font-weight:normal;
+	}
+	.more-info {
+		font-size: 16px;
+		font-weight:normal;
 	}
 }
 
-
+#drill-down, #line-chart, #stacked-grouped-bar-chart, #stacked{margin:0 auto;}
 #drill-down-chart, #stacked-chart, #line-stack-chart{
 	background: #fff;
 	border-radius: 2px;
@@ -56,12 +68,17 @@
 }
 
 div#drill-down-chart {
-    width: 50%;
+    width: 48.5%;
+    clear:left;
 }
 div#line-stack-chart {
-    width: 48%;
+    width: 49.5%;
 }
 
 div#stacked-chart {
     width: 100%;
 }
+
+.select-filters{text-align:center;}
+.chart-type-select{cursor:pointer; width:28px; height:28px;opacity:.95; margin-top:-10px;}
+.not-chosen{opacity:.4;}

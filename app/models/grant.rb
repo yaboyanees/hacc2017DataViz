@@ -10,7 +10,7 @@ LOCATION_SELECT = ["continent", "hawaii", "international", "kauai", "lanai", "ma
 #validations for form fields
 validates :fiscal_year, :grant_type, :organization, :project, :amount, :location, :strategic_priority, :strategic_results, :grantStatusID, :presence => true
 =end
-
+FY = ["2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"]
 	def concatStrategic
 		strategic = strategic_priority + ': ' + strategic_results
 	end
