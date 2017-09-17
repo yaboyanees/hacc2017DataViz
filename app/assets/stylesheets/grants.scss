@@ -79,7 +79,14 @@ div#stacked-chart {
     width: 100%;
 }
 
-#faq-area{height:800px; width: 100%; margin-top: 20px;}
+#faq-area{
+	height: 800px;
+    overflow: scroll;
+    margin-top: 20px;
+	padding: 30px;
+	font-size: 16px;
+    font-weight: normal;
+}
 
 .select-filters{text-align:center;}
 .chart-type-select{cursor:pointer; width:28px; height:28px;opacity:.95; margin-top:-10px;}
