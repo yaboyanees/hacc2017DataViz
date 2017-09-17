@@ -2,6 +2,24 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+table select{
+	color: #5e5e5e;
+	 border:thin solid #777; 
+	 background-color:#fff; 
+	 border-radius:0; 
+	 background: transparent;  
+	 font-size: 14px;
+	 height: 29px; 
+	 padding: 5px; 
+	 -webkit-appearance: none; 
+	 background-image: image-url("dropdown.png");	 
+	 background-repeat:no-repeat; 
+	 background-position:92% center; 
+	 width:180px; 
+	 cursor:pointer;
+	}
+
 #dashboard-rollup{
 	width: 100%;
 	text-align:center;

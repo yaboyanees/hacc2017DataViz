@@ -1,7 +1,7 @@
 <!--<p id="flashNotice"><%#= notice %></p>-->
 
 <% if @grants.present? %>
-	<div id="dashboard-rollup">
+	<div id="dashboard-rollup" data-step="2" data-intro="The rollup dashboard provides quick information at a glance, and is updated immediately when new data is uploaded.">
 		<%= render 'cardRollup' %>
 	</div>
 	<div id="chart-area"> 
