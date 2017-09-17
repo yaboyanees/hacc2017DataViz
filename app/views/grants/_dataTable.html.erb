@@ -1,4 +1,4 @@
-<table id="example" width="100%" class="display" cellspacing="0">
+<table id="example" width="100%" class="display" cellspacing="0" data-step="6" data-intro="You can view the data and slice and dice it however you want here, viewing individual project details. ">
 	<thead>
 		<tr>
 			<th class="thrity">Strategic Priority: Result</th>
@@ -68,7 +68,7 @@
 	<% end %>
 	</tbody>
 </table>
-<div class="export-area">
+<div class="export-area" data-step="7" data-intro="Click here to download an Excel spreadsheet of the data.">
 	<%= link_to grants_url(format: "xls") do %>
 		Raw Data <svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#f9f9f9" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" /></svg>
 	<% end %>
