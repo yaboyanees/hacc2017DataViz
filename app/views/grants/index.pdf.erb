@@ -60,13 +60,12 @@ Highcharts.chart('container1', {
         type: 'area'
     },
     title: {
-        text: 'Historic Worldwide Population Distribution by Region'
+        text: 'Historic Grant Spending by Strategic Priority ',
+		useHTML: true
     },
-    subtitle: {
-        text: 'Source: Wikipedia.org'
-    },
+    
     xAxis: {
-        categories: ['1750', '1800', '1850', '1900', '1950', '1999', '2050'],
+        categories: <%= raw @uYears %>,
         tickmarkPlacement: 'on',
         title: {
             enabled: false
@@ -74,94 +73,117 @@ Highcharts.chart('container1', {
     },
     yAxis: {
         title: {
-            text: 'Percent'
-        }
-    },
-    tooltip: {
-        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b> ({point.y:,.0f} millions)<br/>',
-        split: true
-    },
-    plotOptions: {
-        area: {
-            stacking: 'percent',
-            lineColor: '#ffffff',
-            lineWidth: 1,
-            marker: {
-                lineWidth: 1,
-                lineColor: '#ffffff'
+            text: 'Funding'
+        },
+        labels: {
+            formatter: function () {
+                if(this.value == 0){ 
+				return '$' + this.value / 1000000;
+				}
+				else {
+				return '$' + this.value / 1000000 + ' million';
+				}
             }
         }
     },
-    series: [{
-        name: 'Asia',
-        data: [502, 635, 809, 947, 1402, 3634, 5268]
-    }, {
-        name: 'Africa',
-        data: [106, 107, 111, 133, 221, 767, 1766]
-    }, {
-        name: 'Europe',
-        data: [163, 203, 276, 408, 547, 729, 628]
-    }, {
-        name: 'America',
-        data: [18, 31, 54, 156, 339, 818, 1201]
-    }, {
-        name: 'Oceania',
-        data: [2, 2, 2, 6, 13, 30, 46]
-    }]	
+      tooltip: {
+	  split: true,
+        pointFormat: '{series.name}: <b>${point.y:,.0f}<br/>'
+    },
+    plotOptions: {
+        area: {
+            stacking: 'normal',
+            lineColor: '#666666',
+            lineWidth: 1,
+            marker: {
+                lineWidth: 1,
+                lineColor: '#666666'
+            }
+        },
+		series: {
+            dataLabels: {
+                enabled: false
+            }
+        }
+    },
+    series: [
+	<% index = 0
+	while index < @uPriorities.length - 1%>
+		{
+			name: '<%= raw @uPriorities[index] %>',
+			data: <%= raw @amountPerYearByPriority[index] %>
+		},
+		<% index = index + 1 %>
+	<% end %>
+	{
+		name: '<%= raw @uPriorities[index] %>',
+		data: <%= raw @amountPerYearByPriority[index] %>
+	}
+	]
 });
 
 Highcharts.chart('container2', {
     chart: {
-        type: 'area'
+        type: 'column'
     },
     title: {
-        text: 'Historic Worldwide Population Distribution by Region'
-    },
-    subtitle: {
-        text: 'Source: Wikipedia.org'
+        text: 'Grant Money Awarded Per Year, by Strategic Result'
     },
     xAxis: {
-        categories: ['1750', '1800', '1850', '1900', '1950', '1999', '2050'],
-        tickmarkPlacement: 'on',
-        title: {
-            enabled: false
-        }
+        categories:  <%= raw @uYears %> 
     },
     yAxis: {
+        min: 0,
         title: {
-            text: 'Percent'
-        }
-    },
-    tooltip: {
-        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b> ({point.y:,.0f} millions)<br/>',
-        split: true
-    },
-    plotOptions: {
-        area: {
-            stacking: 'percent',
-            lineColor: '#ffffff',
-            lineWidth: 1,
-            marker: {
-                lineWidth: 1,
-                lineColor: '#ffffff'
+            text: 'Grant Money'
+        },
+        stackLabels: {
+            enabled: false,
+            style: {
+                fontWeight: 'bold',
+                color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
             }
         }
     },
-    series: [{
-        name: 'Asia',
-        data: [502, 635, 809, 947, 1402, 3634, 5268]
-    }, {
-        name: 'Africa',
-        data: [106, 107, 111, 133, 221, 767, 1766]
-    }, {
-        name: 'Europe',
-        data: [163, 203, 276, 408, 547, 729, 628]
-    }, {
-        name: 'America',
-        data: [18, 31, 54, 156, 339, 818, 1201]
-    }, {
-        name: 'Oceania',
-        data: [2, 2, 2, 6, 13, 30, 46]
-    }]	
+    legend: {
+        align: 'right',
+        x: -30,
+        verticalAlign: 'top',
+        y: 25,
+        floating: true,
+        backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+        borderColor: '#CCC',
+        borderWidth: 1,
+        shadow: false
+    },
+    
+    tooltip: {
+        
+        headerFormat: '<b>{point.x}</b><br/>',
+		pointFormat: '{series.name}: ${point.y:,.0f}'
+
+    },
+    plotOptions: {
+        column: {
+            dataLabels: {
+                enabled: false,
+                color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+            }
+        }
+    },
+    series: [
+	<% index = 0
+	while index < @uResults.length - 1%>
+		{
+			name: '<%= raw @uResults[index] %>',
+			data: <%= raw @amountPerYearByResults[index] %>
+	    },
+		<% index = index + 1 %>
+	<% end %>
+	{
+        name: '<%= raw @uResults[index] %>',
+        data: <%= raw @amountPerYearByResults[index] %>
+    }
+	]
 });
 </script>
