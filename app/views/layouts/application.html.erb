@@ -112,7 +112,8 @@ Highcharts.setOptions({
 
 //expand charts for better viewing
 $('.expand-chart').click(function(){
-    $('#drill-down-chart, #line-stack-chart').toggleClass('full-view' );
+    $('#drill-down-chart, #line-stack-chart').toggleClass('full-width' );
+    $('#drill-down, #line-chart').toggleClass('full-height' );
     $('.open-up').toggle("slow");
     $('.close-up').toggle("slow");
     window.dispatchEvent(new Event('resize'));
